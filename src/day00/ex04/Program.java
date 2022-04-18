@@ -26,6 +26,7 @@ public class Program {
             countCharList[j] = charCount[index];
             resultList[j] = maxChar;
             charCount[index] = 0;
+            maxChar = ' ';
             maxCount = 0;
         }
         if (charCount[0] > 999){
@@ -49,7 +50,9 @@ public class Program {
                 if (counts[j] * 10 / d >= i)
                     System.out.print("#\t");
                 if (counts[j] * 10 / d == i - 1) {
-                    System.out.print(counts[j] + "\t");
+                    if (counts[j] != 0) {
+                        System.out.print(counts[j] + "\t");
+                    }
                 }
             }
             System.out.println();

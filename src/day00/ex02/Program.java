@@ -1,5 +1,4 @@
 package day00.ex02;
-import javafx.beans.binding.When;
 
 import java.util.Scanner;
 
