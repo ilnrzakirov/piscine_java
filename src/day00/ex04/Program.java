@@ -28,48 +28,32 @@ public class Program {
             charCount[index] = 0;
             maxCount = 0;
         }
-        printMatrix(countCharList, resultList);
+        if (charCount[0] > 999){
+            System.err.println("Illegal Argument");
+            System.exit(-1);
+        }
+        paintTable(resultList, countCharList);
     }
 
-    public static void printMatrix(int[] countCharList, char[] resultList){
-        char[][] matrix  = new char[12][10];
-        float k;
-
-        for (int i = 0; i < 10; i++){
-            matrix[11][i] = resultList[i];
+    public static void paintTable(char[] chars, int[] counts){
+        int d = counts[0];
+        System.out.println();
+        System.out.println();
+        for(int i = 0; i < 10; i++) {
+            if(counts[i] * 10 / d == 10)
+                System.out.print(counts[i] + "    ");
         }
-        if (countCharList[0] > 10){
-            k = countCharList[0] / 10.0f;
-        }
-        else{
-            k = 1;
-        }
-        for (int i = 0; i < 12; i++){
-            for (int j = 0; j < 10; j++){
-                if (i != 11) {
-                    if (countCharList[j % 10] / k > j % 10) {
-                        matrix[i][j] = '#';
-                    }
-                    if (i == 0 && j == 0) {
-                        matrix[i][j] = '*';
-                    }
-                    if (countCharList[j % 10] / k == j % 10) {
-                        matrix[i][j] = '*';
-                    }
-                    if (countCharList[j % 10] / k < j % 10) {
-                        matrix[i][j] = ' ';
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < 12; i++) {
-            System.out.println();
+        System.out.println();
+        for (int i = 10; i > 0; i--) {
             for (int j = 0; j < 10; j++) {
-                if (matrix[i][j] == 0){
-                    continue;
+                if (counts[j] * 10 / d >= i)
+                    System.out.print("#    ");
+                if (counts[j] * 10 / d == i - 1) {
+                    System.out.print(counts[j] + "    ");
                 }
-                System.out.print(matrix[i][j]);
             }
+            System.out.println();
         }
+        System.out.println(chars);
     }
 }
