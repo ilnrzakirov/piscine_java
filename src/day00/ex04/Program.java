@@ -18,6 +18,7 @@ public class Program {
         for (int j = 0; j < 10; j++){
             for (int i = 0; i < 65535; i++){
                 if (charCount[i] > maxCount){
+                    maxCount = charCount[i];
                     maxChar = (char) i;
                     index = i;
                 }
@@ -25,10 +26,50 @@ public class Program {
             countCharList[j] = charCount[index];
             resultList[j] = maxChar;
             charCount[index] = 0;
+            maxCount = 0;
         }
-        System.out.println(resultList);
-        for (int f = 0; f < 10; f++){
-            System.out.print(countCharList[f]);
+        printMatrix(countCharList, resultList);
+    }
+
+    public static void printMatrix(int[] countCharList, char[] resultList){
+        char[][] matrix  = new char[12][10];
+        float k;
+
+        for (int i = 0; i < 10; i++){
+            matrix[11][i] = resultList[i];
+        }
+        if (countCharList[0] > 10){
+            k = countCharList[0] / 10.0f;
+        }
+        else{
+            k = 1;
+        }
+        for (int i = 0; i < 12; i++){
+            for (int j = 0; j < 10; j++){
+                if (i != 11) {
+                    if (countCharList[j % 10] / k > j % 10) {
+                        matrix[i][j] = '#';
+                    }
+                    if (i == 0 && j == 0) {
+                        matrix[i][j] = '*';
+                    }
+                    if (countCharList[j % 10] / k == j % 10) {
+                        matrix[i][j] = '*';
+                    }
+                    if (countCharList[j % 10] / k < j % 10) {
+                        matrix[i][j] = ' ';
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 12; i++) {
+            System.out.println();
+            for (int j = 0; j < 10; j++) {
+                if (matrix[i][j] == 0){
+                    continue;
+                }
+                System.out.print(matrix[i][j]);
+            }
         }
     }
 }
