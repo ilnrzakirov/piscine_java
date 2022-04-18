@@ -7,7 +7,6 @@ public class Program {
         int number = scanner.nextInt();
         int step = 1;
         boolean isPrime = true;
-        int temp;
 
         if (number <= 1){
             System.err.println("Illegal Argument");
@@ -18,9 +17,8 @@ public class Program {
             System.exit(0);
         }
         else{
-            for (int i = 2; i * i <= number; i++){
-                temp = number % i;
-                if (temp == 0)
+            for (long i = 2; i * i <= number; i++){
+                if (number % i == 0)
                 {
                     isPrime = false;
                     break;
