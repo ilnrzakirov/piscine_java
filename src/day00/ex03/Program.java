@@ -7,9 +7,11 @@ public class Program {
         Scanner scanner = new Scanner(System.in);
         String inputData = scanner.nextLine();
         int week = 1;
+        long grade;
         long grades = 0;
 
         while (!inputData.equals("42") && week <= 18){
+            inputData = inputData.trim();
             if (!inputData.equals("Week " + week)){
                 System.err.println("IllegalArgument");
                 System.exit(-1);
@@ -20,8 +22,14 @@ public class Program {
             inputData = scanner.nextLine();
             week++;
         }
-        for (int i = 1; i <= week; i++){
-            System.out.println("Week "+ i);
+        for (int i = 1; i < week; i++){
+            System.out.print("Week " +i);
+            grade = grades % 10;
+            grades = grades / 10;
+            for (int j = 0; j < grade; j++){
+                System.out.print("=");
+            }
+            System.out.println(">");
         }
     }
 
