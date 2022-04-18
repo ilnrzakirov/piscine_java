@@ -41,19 +41,21 @@ public class Program {
         System.out.println();
         for(int i = 0; i < 10; i++) {
             if(counts[i] * 10 / d == 10)
-                System.out.print(counts[i] + "    ");
+                System.out.print(counts[i] + "\t");
         }
         System.out.println();
         for (int i = 10; i > 0; i--) {
             for (int j = 0; j < 10; j++) {
                 if (counts[j] * 10 / d >= i)
-                    System.out.print("#    ");
+                    System.out.print("#\t");
                 if (counts[j] * 10 / d == i - 1) {
-                    System.out.print(counts[j] + "    ");
+                    System.out.print(counts[j] + "\t");
                 }
             }
             System.out.println();
         }
-        System.out.println(chars);
+        for (int i = 0; i < 10; i++){
+            System.out.print(chars[i] + "\t");
+        }
     }
 }
