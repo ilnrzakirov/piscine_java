@@ -5,7 +5,7 @@ public class Program {
     public static void main(String[] argv){
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
-        int step = 0;
+        int step = 1;
         boolean isPrime = true;
         int temp;
 
@@ -18,14 +18,14 @@ public class Program {
             System.exit(0);
         }
         else{
-            for (int i = 2; i * i <= number + 1; i++){
-                step++;
+            for (int i = 2; i * i <= number; i++){
                 temp = number % i;
                 if (temp == 0)
                 {
                     isPrime = false;
                     break;
                 }
+                step++;
             }
         }
         System.out.println(isPrime + " " + step);

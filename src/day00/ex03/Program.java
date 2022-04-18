@@ -20,9 +20,9 @@ public class Program {
             inputData = scanner.nextLine();
             week++;
         }
-//        for (int i = 1; i <= week; i++){
-//
-//        }
+        for (int i = 1; i <= week; i++){
+            System.out.println("Week "+ i);
+        }
     }
 
     public static long getGrades(long grades, int week, Scanner scanner){
