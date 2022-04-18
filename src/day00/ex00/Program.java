@@ -6,12 +6,18 @@ public class Program{
         int result;
 
         result = 0;
-        number = 546894;
+        number = 111212;
         result += number % 10;
-        while (number > 10){
-            number = number / 10;
-            result += number % 10;
-        }
+        number = number / 10;
+        result += number % 10;
+        number = number / 10;
+        result += number % 10;
+        number = number / 10;
+        result += number % 10;
+        number = number / 10;
+        result += number % 10;
+        number = number / 10;
+        result += number % 10;
         System.out.println(result);
     }
 }
