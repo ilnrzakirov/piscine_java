@@ -17,7 +17,6 @@ public class Program {
                 System.exit(-1);
             }
             grades = getGrades(grades, week, scanner);
-            System.out.println(grades);
             scanner.nextLine();
             inputData = scanner.nextLine();
             week++;
@@ -61,6 +60,10 @@ public class Program {
                 min = inputNumber;
             }
             count++;
+        }
+        if (min > 9 || min < 1){
+            System.err.println("IllegalArgument");
+            System.exit(-1);
         }
         return (min);
     }
