@@ -10,7 +10,7 @@ public class Program {
         int temp;
 
         if (number <= 1){
-            System.out.println("Illegal Argument");
+            System.err.println("Illegal Argument");
             System.exit(-1);
         }
         else if (number == 2){
