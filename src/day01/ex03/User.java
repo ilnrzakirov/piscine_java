@@ -4,7 +4,7 @@ public class User {
     private final Integer id;
     private Integer balance;
     private String name;
-    private TransactionsList transactionsList = new TransactionsLinkedList();
+    private TransactionsList transactionsList;
 
     public void setBalance(Integer balance) {
         if (balance > 0) {
@@ -17,6 +17,7 @@ public class User {
 
     public User() {
         this.id = UserIdsGenerator.getInstance().generateId();
+        this.transactionsList = new TransactionsLinkedList();
     }
 
     public User(Integer balance, String name) {
@@ -28,6 +29,7 @@ public class User {
         }
         this.name = name;
         this.id = UserIdsGenerator.getInstance().generateId();
+        this.transactionsList = new TransactionsLinkedList();
     }
 
     public void setName(String name) {

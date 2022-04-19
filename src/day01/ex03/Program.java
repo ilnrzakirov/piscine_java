@@ -1,5 +1,7 @@
 package day01.ex03;
 
+import java.util.UUID;
+
 public class Program {
     public static void main(String[] args) {
         User user1 = new User(2500, "Bob");
@@ -14,8 +16,13 @@ public class Program {
         list.addTransaction(tr2);
         list.addTransaction(tr3);
         list.showTransaction();
-        list.removeTransactionById(tr2.getIdentifier());
+        list.removeTransactionById(tr1.getIdentifier());
         System.out.println();
         list.showTransaction();
+        Transaction[] arrayTr = list.toArray();
+        System.out.println();
+        for (int i = 0; i < list.getSize(); i++){
+            arrayTr[i].printTransferInfo();
+        }
     }
 }

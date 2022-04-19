@@ -5,16 +5,17 @@ import java.util.UUID;
 public class TransactionsLinkedList implements TransactionsList {
     private Transaction start;
     private Transaction end;
+    private Integer size = 0;
 
     @Override
     public void addTransaction(Transaction newTransaction) {
         if (this.start == null){
             this.start = newTransaction;
-            this.end = newTransaction;
         } else {
             this.end.setNext(newTransaction);
-            this.end = newTransaction;
         }
+        this.end = newTransaction;
+        size++;
     }
 
     @Override
@@ -26,15 +27,14 @@ public class TransactionsLinkedList implements TransactionsList {
         prev = this.start;
         if (prev.getIdentifier() == id){
             this.start = temp;
+            size--;
             return;
         }
         while (temp != null){
             if (temp.getIdentifier() == id){
                 prev.setNext(temp.getNext());
+                size--;
                 return;
-            }
-            if (prev.getNext() == null || temp.getNext() == null) {
-                break;
             }
             prev = prev.getNext();
             temp = prev.getNext();
@@ -44,7 +44,19 @@ public class TransactionsLinkedList implements TransactionsList {
 
     @Override
     public Transaction[] toArray() {
-        return new Transaction[0];
+        Transaction[] transactionArray = new Transaction[this.size];
+        int i = 0;
+        Transaction temp = this.start;
+        while (temp != null){
+            transactionArray[i] = temp;
+            i++;
+            temp = temp.getNext();
+        }
+        return transactionArray;
+    }
+
+    public Integer getSize() {
+        return size;
     }
 
     public void showTransaction(){
