@@ -44,31 +44,24 @@ public class TransactionsService {
     }
 
     public Transaction[] getInvalidTransaction(){
-        TransactionsList allTransactionList = new TransactionsLinkedList();
-        for (int i = 0; i < userList.getUserCount(); i++){
-            int count = userList.getUserByIndex(i).getTransactionsList().getSize();
-            for (int k = 0; k < count; k++){
-                allTransactionList.addTransaction(userList.getUserByIndex(i).getTransactionsList().toArray()[k]);
-            }
-        }
-        TransactionsList resultList = new TransactionsLinkedList();
-        while (allTransactionList.getSize() < 1){
-            int flag = 0;
-            int j;
-            for (j = 1; j < allTransactionList.getSize(); j++){
-                if (allTransactionList.getTransactionByIndex(0).getIdentifier() !=
-                        allTransactionList.getTransactionByIndex(j).getIdentifier()){
-                    flag = 1;
-                    break;
+        TransactionsList notValid = new TransactionsLinkedList();
+
+        for (int i = 1; i <= userList.getUserCount(); i++) {
+            Transaction[] transactions = this.userList.getUserById(i).getTransactionsList().toArray();
+            for (Transaction t : transactions) {
+                boolean valid = false;
+                for (Transaction t2 : t.getRecipient().getTransactionsList().toArray()) {
+                    if (t.getIdentifier() == t2.getIdentifier()) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    notValid.addTransaction(t);
                 }
             }
-            if (flag == 1){
-                resultList.addTransaction(allTransactionList.getTransactionByIndex(j));
-            }
-            allTransactionList.removeTransactionById(allTransactionList.getTransactionByIndex(0).getIdentifier());
-            allTransactionList.removeTransactionById(allTransactionList.getTransactionByIndex(j).getIdentifier());
         }
-        return resultList.toArray();
+        return notValid.toArray();
     }
 }
 
