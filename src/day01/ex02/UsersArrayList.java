@@ -32,10 +32,10 @@ public class UsersArrayList implements UserList {
 
     @Override
     public User getUserByIndex(int index) {
-        if (index <= this.count){
+        if (index <= this.count || index > 0){
             return users[index];
         }
-        return null;
+        throw new UserNotFoundException("User not found");
     }
 
     @Override

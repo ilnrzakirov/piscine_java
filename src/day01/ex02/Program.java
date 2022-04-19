@@ -39,5 +39,6 @@ public class Program {
         System.out.println("ArraySize:\t" + userList.getArraySize());
         System.out.println("UserCount:\t"+userList.getUserCount());
         userList.getUserById(444);
+        userList.getUserByIndex(80);
     }
 }
