@@ -26,10 +26,12 @@ public class TransactionsLinkedList implements TransactionsList {
         prev = this.start;
         if (prev.getIdentifier() == id){
             this.start = temp;
+            return;
         }
         while (temp != null){
             if (temp.getIdentifier() == id){
                 prev.setNext(temp.getNext());
+                return;
             }
             if (prev.getNext() == null || temp.getNext() == null) {
                 break;
@@ -37,6 +39,7 @@ public class TransactionsLinkedList implements TransactionsList {
             prev = prev.getNext();
             temp = prev.getNext();
         }
+        throw new TransactionNotFoundException("Transaction not found");
     }
 
     @Override

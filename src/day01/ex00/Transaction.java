@@ -3,7 +3,7 @@ package day01.ex00;
 import java.util.UUID;
 
 public class Transaction {
-    private UUID identifier;
+    private final UUID identifier;
     private User recipient;
     private User sender;
     private int transferAmount;
@@ -40,10 +40,6 @@ public class Transaction {
 
     public UUID getIdentifier() {
         return identifier;
-    }
-
-    public void setIdentifier(UUID identifier) {
-        this.identifier = identifier;
     }
 
     public void setRecipient(User recipient) {
