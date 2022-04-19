@@ -1,7 +1,5 @@
 package day01.ex03;
 
-import day01.ex00.User;
-
 import java.util.UUID;
 
 public class Transaction {
@@ -10,6 +8,7 @@ public class Transaction {
     private User sender;
     private int transferAmount;
     private Category transferCategory;
+    private Transaction next;
 
     enum Category {
         DEBIT, CREDIT
@@ -48,7 +47,7 @@ public class Transaction {
         this.identifier = identifier;
     }
 
-    public void setRecipient(day01.ex00.User recipient) {
+    public void setRecipient(User recipient) {
         this.recipient = recipient;
     }
 
@@ -73,5 +72,13 @@ public class Transaction {
     public void printTransferInfo(){
         System.out.print("Sender: " + this.sender.getName() + ". Recipient: " + this.recipient.getName() );
         System.out.print(". Category: " + this.transferCategory + ". Amount: " + this.transferAmount + "\n");
+    }
+
+    public void setNext(Transaction next) {
+        this.next = next;
+    }
+
+    public Transaction getNext() {
+        return next;
     }
 }
