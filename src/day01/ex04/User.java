@@ -48,6 +48,10 @@ public class User {
         return balance;
     }
 
+    public TransactionsList getTransactionsList() {
+        return transactionsList;
+    }
+
     public void printInfo(){
         System.out.println("Name: " + this.name + ", balance: " + this.balance + ", id: " + this.id);
     }
