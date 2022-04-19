@@ -40,6 +40,17 @@ public class UsersArrayList implements UserList {
 
     @Override
     public Integer getUserCount() {
-        return this.count + 1;
+        return this.count;
+    }
+
+    public int getArraySize() {
+        return arraySize;
+    }
+
+    public void printInfo(){
+        for (int i = 0; i < this.count; i++){
+            System.out.print(i + "\tName: " + users[i].getName() + "\tbalance: " + users[i].getBalance());
+            System.out.println("\tid: " + users[i].getId());
+        }
     }
 }
