@@ -19,11 +19,12 @@ public class TransactionsService {
     public void executeTransaction(Integer senderId, Integer recipientId, Integer amount){
         User sender = userList.getUserById(senderId);
         User recipient = userList.getUserById(recipientId);
-        if (amount < 0 || sender.getBalance() < amount){
+        if (amount < 0 || sender.getBalance() < amount || senderId == recipientId){
             throw new IllegalTransactionException(" Illegal Transaction");
         }
         Transaction credit = new Transaction(recipient, sender, -amount, Transaction.Category.CREDIT);
         Transaction debit = new Transaction(recipient, sender, amount, Transaction.Category.DEBIT);
+        debit.setIdentifier(credit.getIdentifier());
         sender.getTransactionsList().addTransaction(credit);
         recipient.getTransactionsList().addTransaction(debit);
         recipient.setBalance(recipient.getBalance() + amount);

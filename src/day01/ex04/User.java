@@ -55,5 +55,12 @@ public class User {
     public void printInfo(){
         System.out.println("Name: " + this.name + ", balance: " + this.balance + ", id: " + this.id);
     }
+
+    public void printTransactionList(){
+        Transaction[] list = this.getTransactionsList().toArray();
+        for (int i = 0; i < this.getTransactionsList().getSize(); i++){
+            list[i].printTransferInfo();
+        }
+    }
 }
 

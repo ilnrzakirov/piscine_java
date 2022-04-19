@@ -8,7 +8,13 @@ public class Program {
         transactionsService.addUser(user1);
         transactionsService.addUser(user2);
         transactionsService.executeTransaction(user1.getId(), user2.getId(), 100);
+        transactionsService.executeTransaction(user1.getId(), user2.getId(), 500);
+        transactionsService.executeTransaction(user2.getId(), user1.getId(), 300);
         user1.printInfo();
         user2.printInfo();
+        user1.printTransactionList();
+        System.out.println();
+        user2.printTransactionList();
+        transactionsService.executeTransaction(user2.getId(), user2.getId(), 300);
     }
 }
