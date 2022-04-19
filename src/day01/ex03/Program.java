@@ -24,5 +24,6 @@ public class Program {
         for (int i = 0; i < list.getSize(); i++){
             arrayTr[i].printTransferInfo();
         }
+        list.removeTransactionById(UUID.randomUUID());
     }
 }
