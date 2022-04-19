@@ -1,5 +1,9 @@
 package day01.ex04;
 
+import javafx.beans.binding.When;
+
+import java.util.UUID;
+
 public class TransactionsService {
     TransactionsList transactionsList = new TransactionsLinkedList();
     UserList userList = new UsersArrayList();
@@ -29,6 +33,42 @@ public class TransactionsService {
         recipient.getTransactionsList().addTransaction(debit);
         recipient.setBalance(recipient.getBalance() + amount);
         sender.setBalance(sender.getBalance() - amount);
+    }
+
+    public Transaction[] getTransactionList(Integer userId){
+        return userList.getUserById(userId).getTransactionsList().toArray();
+    }
+
+    public void removeTransactionById(UUID transactionId, Integer userId){
+        userList.getUserById(userId).getTransactionsList().removeTransactionById(transactionId);
+    }
+
+    public Transaction[] getInvalidTransaction(){
+        TransactionsList allTransactionList = new TransactionsLinkedList();
+        for (int i = 0; i < userList.getUserCount(); i++){
+            int count = userList.getUserByIndex(i).getTransactionsList().getSize();
+            for (int k = 0; k < count; k++){
+                allTransactionList.addTransaction(userList.getUserByIndex(i).getTransactionsList().toArray()[k]);
+            }
+        }
+        TransactionsList resultList = new TransactionsLinkedList();
+        while (allTransactionList.getSize() < 1){
+            int flag = 0;
+            int j;
+            for (j = 1; j < allTransactionList.getSize(); j++){
+                if (allTransactionList.getTransactionByIndex(0).getIdentifier() !=
+                        allTransactionList.getTransactionByIndex(j).getIdentifier()){
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag == 1){
+                resultList.addTransaction(allTransactionList.getTransactionByIndex(j));
+            }
+            allTransactionList.removeTransactionById(allTransactionList.getTransactionByIndex(0).getIdentifier());
+            allTransactionList.removeTransactionById(allTransactionList.getTransactionByIndex(j).getIdentifier());
+        }
+        return resultList.toArray();
     }
 }
 
