@@ -6,15 +6,15 @@ public class Program {
         User user2 = new User(100, "Tom");
         User user3 = new User(10000, "Tim");
         User user4 = new User(1400, "Jon");
-        User user5 = new User(100, "Tom");
+        User user5 = new User(100, "Toem");
         User user6 = new User(10000, "Tim");
         User user7 = new User(1400, "Jon");
-        User user8 = new User(100, "Tom");
-        User user9 = new User(10000, "Tim");
-        User user10 = new User(1400, "Jon");
-        User user11 = new User(100, "Tom");
-        User user12 = new User(10000, "Tim");
-        User user13 = new User(1400, "Jon");
+        User user8 = new User(100, "Tim");
+        User user9 = new User(10000, "Tpm");
+        User user10 = new User(1400, "Joln");
+        User user11 = new User(100, "Toylm");
+        User user12 = new User(10000, "Tiim");
+        User user13 = new User(1400, "Jonl");
 
         UsersArrayList userList = new UsersArrayList();
         userList.addUser(user1);

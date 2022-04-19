@@ -1,9 +1,10 @@
-package day01.ex02;
+package day01.ex03;
 
 public class User {
     private final Integer id;
     private Integer balance;
     private String name;
+    private TransactionsList transactionsList = new TransactionsLinkedList();
 
     public void setBalance(Integer balance) {
         if (balance > 0) {
