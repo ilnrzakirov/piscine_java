@@ -13,6 +13,8 @@ public class Program {
         user3.printInfo();
 
         Transaction tr1 = new Transaction(user1, user2, -200, Transaction.Category.CREDIT);
+        Transaction tr2 = new Transaction(user3, user2, 200, Transaction.Category.DEBIT);
         tr1.printTransferInfo();
+        tr2.printTransferInfo();
     }
 }
