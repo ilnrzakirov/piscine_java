@@ -5,20 +5,20 @@ import java.util.Scanner;
 public class Program {
     public static void main(String[] argv) {
         Scanner scanner = new Scanner(System.in);
-        String inputData = scanner.nextLine();
+        String inputData = scanner.next();
         int week = 1;
         long grade;
         long grades = 0;
 
         while (!inputData.equals("42") && week <= 18){
-            inputData = inputData.trim();
-            if (!inputData.equals("Week " + week)){
+            int inputWeek = scanner.nextInt();
+            if (!inputData.equals("Week") || inputWeek != week){
                 System.err.println("IllegalArgument");
                 System.exit(-1);
             }
             grades = getGrades(grades, week, scanner);
             scanner.nextLine();
-            inputData = scanner.nextLine();
+            inputData = scanner.next();
             week++;
         }
         for (int i = 1; i < week; i++){
@@ -52,19 +52,32 @@ public class Program {
         int count;
         int inputNumber;
 
-        min = scanner.nextInt();
-        count = 0;
-        while (count < 4){
-            inputNumber = scanner.nextInt();
-            if (inputNumber < min){
-                min = inputNumber;
+        if (scanner.hasNextInt()) {
+            min = scanner.nextInt();
+            count = 0;
+            while (count < 4) {
+                if (scanner.hasNextInt()) {
+                    inputNumber = scanner.nextInt();
+                    if (inputNumber < min) {
+                        min = inputNumber;
+                    }
+                }
+                else {
+                    System.err.println("IllegalArgument");
+                    System.exit(-1);
+                }
+                count++;
             }
-            count++;
+            if (min > 9 || min < 1) {
+                System.err.println("IllegalArgument");
+                System.exit(-1);
+            }
+            return (min);
         }
-        if (min > 9 || min < 1){
+        else{
             System.err.println("IllegalArgument");
             System.exit(-1);
         }
-        return (min);
+        return 0;
     }
 }
