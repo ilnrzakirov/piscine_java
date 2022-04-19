@@ -12,5 +12,6 @@ public class Program {
         user3.printInfo();
         user4.printInfo();
         user5.printInfo();
+        System.out.println(UserIdsGenerator.getIdentifier());
     }
 }

@@ -11,7 +11,11 @@ public class UserIdsGenerator {
         return object;
     }
 
-    public Integer generateId(){
+    public int generateId(){
         return ++identifier;
+    }
+
+    public static Integer getIdentifier() {
+        return identifier;
     }
 }
