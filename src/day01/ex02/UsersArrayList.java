@@ -2,6 +2,8 @@ package day01.ex02;
 
 public class UsersArrayList implements UserList {
     private User[] users = new User[10];
+    private static Integer count;
+    private static Integer arraySize = 10;
 
     @Override
     public void addUser(User newUser) {
@@ -20,6 +22,6 @@ public class UsersArrayList implements UserList {
 
     @Override
     public Integer getUserCount() {
-        return null;
+        return UsersArrayList.count + 1;
     }
 }
