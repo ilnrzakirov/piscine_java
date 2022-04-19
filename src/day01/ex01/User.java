@@ -1,7 +1,7 @@
 package day01.ex01;
 
 public class User {
-    private Integer id;
+    private final Integer id;
     private Integer balance;
     private String name;
 
@@ -31,5 +31,21 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void printInfo(){
+        System.out.println("Name: " + this.name + ", balance: " + this.balance + ", id: " + this.id);
     }
 }
