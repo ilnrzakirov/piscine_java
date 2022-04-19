@@ -1,7 +1,5 @@
 package day01.ex04;
 
-import javafx.beans.binding.When;
-
 import java.util.UUID;
 
 public class TransactionsService {
