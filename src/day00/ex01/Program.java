@@ -27,6 +27,7 @@ public class Program {
             }
         }
         System.out.println(isPrime + " " + step);
+        scanner.close();
         System.exit(0);
     }
 }

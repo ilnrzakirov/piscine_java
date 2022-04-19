@@ -30,6 +30,7 @@ public class Program {
             }
             System.out.println(">");
         }
+        scanner.close();
     }
 
     public static long getGrades(long grades, int week, Scanner scanner){

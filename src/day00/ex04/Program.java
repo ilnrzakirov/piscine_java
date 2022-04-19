@@ -34,6 +34,7 @@ public class Program {
             System.exit(-1);
         }
         paintTable(resultList, countCharList);
+        scanner.close();
     }
 
     public static void paintTable(char[] chars, int[] counts){

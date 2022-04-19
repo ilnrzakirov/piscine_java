@@ -17,6 +17,7 @@ public class Program {
             number = scanner.nextInt();
         }
         System.out.println("Count of coffee-request – " + amountCoffee);
+        scanner.close();
     }
 
     public static int getSumOfDigit(int number){
