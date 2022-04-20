@@ -34,7 +34,7 @@ public class UsersArrayList implements UserList {
 
     @Override
     public User getUserByIndex(Integer index) {
-        if (index <= this.count || index > 0){
+        if (index <= this.count || index >= 0){
             return users[index];
         }
 

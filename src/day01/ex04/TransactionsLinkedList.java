@@ -56,7 +56,7 @@ public class TransactionsLinkedList implements TransactionsList {
         int i = 0;
         Transaction temp = this.start;
 
-        while (temp != null){
+        while (i < this.size){
             transactionArray[i] = temp;
             i++;
             temp = temp.getNext();
@@ -78,20 +78,4 @@ public class TransactionsLinkedList implements TransactionsList {
             temp = temp.getNext();
         }
     }
-
-    @Override
-    public Transaction getTransactionByIndex(Integer index) {
-        Transaction temp = this.start;
-        int i = 0;
-
-        while (temp != null){
-            if (i == index){
-                return temp;
-            }
-            temp = temp.getNext();
-            i++;
-        }
-        return null;
-    }
-
 }

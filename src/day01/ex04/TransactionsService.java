@@ -46,7 +46,31 @@ public class TransactionsService {
     }
 
     public Transaction[] getInvalidTransaction(){
-        return invalidTransactionList.toArray();
+        TransactionsLinkedList list = new TransactionsLinkedList();
+
+        for (int i = 0; i < userList.getUserCount(); i++) {
+            User user = userList.getUserByIndex(i);
+            if (user != null) {
+                int size = user.getTransactionsList().getSize();
+                for (int j = 0; j < size; j++) {
+                    list.addTransaction(user.getTransactionsList().toArray()[j]);
+                }
+            }
+        }
+
+        TransactionsLinkedList result = new TransactionsLinkedList();
+        for (int i = 0; i < list.getSize(); i++) {
+            int count = 0;
+            for (int j = 0; j < list.getSize(); j++) {
+                if (list.toArray()[i].getIdentifier() == list.toArray()[j].getIdentifier()) {
+                    count++;
+                }
+            }
+            if (count != 2) {
+                result.addTransaction(list.toArray()[i]);
+            }
+        }
+        return result.toArray();
     }
 }
 

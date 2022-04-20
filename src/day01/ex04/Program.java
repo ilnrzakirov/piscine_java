@@ -16,9 +16,16 @@ public class Program {
         user1.printTransactionList();
         System.out.println();
         user2.printTransactionList();
+        Transaction tr1 = new Transaction(user1, user2, 500, Transaction.Category.DEBIT);
+        user1.getTransactionsList().addTransaction(tr1);
         Transaction[] array = transactionsService.getInvalidTransaction();
         System.out.println();
         user1.printTransactionList();
-        transactionsService.executeTransaction(user2.getId(), user1.getId(), 300);
+        System.out.println();
+        int i = 0;
+
+        while (i < array.length){
+            array[i++].printTransferInfo();
+        }
     }
 }
