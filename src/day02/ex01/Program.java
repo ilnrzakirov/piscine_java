@@ -1,6 +1,7 @@
 package day02.ex01;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.*;
 
 public class Program {
@@ -15,6 +16,11 @@ public class Program {
         String dataFileA = getAllLine(args[0]);
         String dataFileB = getAllLine(args[1]);
         if (dataFileA.isEmpty() && dataFileB.isEmpty()){
+            System.out.println("Similarity = 1");
+            System.exit(0);
+        }
+        if (dataFileA.isEmpty() || dataFileB.isEmpty()){
+            System.out.println("Similarity = 0");
             System.exit(0);
         }
 
@@ -24,7 +30,30 @@ public class Program {
         Map<String, Integer> frequencyWordB;
         frequencyWordA = getCountWord(arrayDataFileA);
         frequencyWordB = getCountWord(arrayDataFileB);
+        HashSet<String> dictionary = new HashSet<>(frequencyWordA.keySet());
+        dictionary.addAll(frequencyWordB.keySet());
+        writeByOutputFile(dictionary);
+        createVector(dictionary, frequencyWordA, frequencyWordB);
     }
+
+    private static void createVector(HashSet<String> dictionary, Map<String, Integer> frequencyWordA, Map<String, Integer> frequencyWordB) {
+        ArrayList<String> arrayList = new ArrayList<>(dictionary);
+        Vector<Integer> vectorA = new Vector<>(dictionary.size());
+        Vector<Integer> vectorB = new Vector<>(dictionary.size());
+
+    }
+
+    private static void writeByOutputFile(HashSet<String> dictionary) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream("dictionary.txt", true)){
+            for (String word : dictionary) {
+                fileOutputStream.write(word.getBytes());
+                fileOutputStream.write('\n');
+            }
+        }catch (Exception error){
+            System.exit(-1);
+        }
+    }
+
 
     public static String getAllLine(String filename){
         StringBuilder sb = new StringBuilder();
