@@ -13,15 +13,16 @@ public class Program {
     private static final char[] HEX = "0123456789ABCDEF".toCharArray();
     private static final String SIGNATURE_FILE = "signatures.txt";
     private static final String RESULT_FILE = "result.txt";
+    private static final String PROCESSED = "PROCESSED";
+    private static final String UNDEFINED = "UNDEFINED";
+    private static final String FNF = "File not found";
 
     public static void main(String[] args){
         Map <String, String> signature = new HashMap<>();
         FileInputStream fileInputStream;
-        FileOutputStream fileOutputStream;
 
         try{
             fileInputStream = new FileInputStream(SIGNATURE_FILE);
-            fileOutputStream = new FileOutputStream(RESULT_FILE);
             Scanner newScanner = new Scanner(fileInputStream);
 
             while (newScanner.hasNextLine()){
@@ -32,7 +33,7 @@ public class Program {
             newScanner.close();
             fileInputStream.close();
         } catch (Exception error){
-            System.err.println("file not found");
+            System.err.println(FNF);
             System.exit(-1);
         }
 
@@ -47,7 +48,7 @@ public class Program {
                 String fileSignature = bytesToHex(bytes);
                 findSignature(fileSignature, signature);
             } catch (Exception error){
-                System.err.println("file not found");
+                System.err.println(FNF);
             }
 
             inputLine = scanner.nextLine();
@@ -72,19 +73,19 @@ public class Program {
         FileOutputStream fileOutputStream;
 
         try{
-            fileOutputStream = new FileOutputStream("result.txt", true);
+            fileOutputStream = new FileOutputStream(RESULT_FILE, true);
 
             for (Map.Entry<String, String> fileSignature : signatureMap.entrySet()) {
                 if (signature.contains(fileSignature.getValue())){
                     fileOutputStream.write(fileSignature.getKey().getBytes());
                     fileOutputStream.write('\n');
-                    System.out.println("PROCESSED");
+                    System.out.println(PROCESSED);
                     return;
                 }
             }
-            System.out.println("UNDEFINED");
+            System.out.println(UNDEFINED);
         } catch (Exception error){
-            System.err.println("file not found");
+            System.err.println(FNF);
         }
     }
 }
