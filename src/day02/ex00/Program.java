@@ -11,6 +11,8 @@ public class Program {
     private static final String END = "42";
     private static final Integer BYTE_SIZE = 8;
     private static final char[] HEX = "0123456789ABCDEF".toCharArray();
+    private static final String SIGNATURE_FILE = "signatures.txt";
+    private static final String RESULT_FILE = "result.txt";
 
     public static void main(String[] args){
         Map <String, String> signature = new HashMap<>();
@@ -18,8 +20,8 @@ public class Program {
         FileOutputStream fileOutputStream;
 
         try{
-            fileInputStream = new FileInputStream("signatures.txt");
-            fileOutputStream = new FileOutputStream("result.txt");
+            fileInputStream = new FileInputStream(SIGNATURE_FILE);
+            fileOutputStream = new FileOutputStream(RESULT_FILE);
             Scanner newScanner = new Scanner(fileInputStream);
 
             while (newScanner.hasNextLine()){
