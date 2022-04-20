@@ -73,7 +73,7 @@ public class TransactionsLinkedList implements TransactionsList {
     }
 
     @Override
-    public Transaction getTransactionByIndex(int index) {
+    public Transaction getTransactionByIndex(Integer index) {
         Transaction temp = this.start;
         int i = 0;
 

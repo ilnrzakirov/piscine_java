@@ -11,7 +11,7 @@ public class UserIdsGenerator {
         return object;
     }
 
-    public int generateId(){
+    public Integer generateId(){
         return ++identifier;
     }
 

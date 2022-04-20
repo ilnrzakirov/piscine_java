@@ -1,9 +1,9 @@
 package day01.ex04;
 
 public class UsersArrayList implements UserList {
-    private int arraySize = 10;
+    private Integer arraySize = 10;
     private User[] users = new User[arraySize];
-    private int count;
+    private Integer count = 0;
 
     @Override
     public void addUser(User newUser) {
@@ -21,7 +21,7 @@ public class UsersArrayList implements UserList {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Integer id) {
         for (int i = 0; i < this.count; i++){
             if (users[i].getId() == id){
                 return users[i];
@@ -31,7 +31,7 @@ public class UsersArrayList implements UserList {
     }
 
     @Override
-    public User getUserByIndex(int index) {
+    public User getUserByIndex(Integer index) {
         if (index <= this.count || index > 0){
             return users[index];
         }
@@ -43,7 +43,7 @@ public class UsersArrayList implements UserList {
         return this.count;
     }
 
-    public int getArraySize() {
+    public Integer getArraySize() {
         return arraySize;
     }
 

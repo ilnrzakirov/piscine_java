@@ -1,5 +1,7 @@
 package day01.ex01;
 
+import javax.jws.soap.SOAPBinding;
+
 public class Program {
     public static void main(String[] args) {
         User user1 = new User(2400, "Tom");

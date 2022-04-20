@@ -17,6 +17,7 @@ public class User {
 
     public User() {
         this.id = UserIdsGenerator.getInstance().generateId();
+        this.balance = 0;
         this.transactionsList = new TransactionsLinkedList();
     }
 

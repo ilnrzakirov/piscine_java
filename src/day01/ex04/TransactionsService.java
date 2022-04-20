@@ -47,24 +47,7 @@ public class TransactionsService {
     }
 
     public Transaction[] getInvalidTransaction(){
-        TransactionsList notValid = new TransactionsLinkedList();
-
-        for (int i = 1; i <= userList.getUserCount(); i++) {
-            Transaction[] transactions = this.userList.getUserById(i).getTransactionsList().toArray();
-            for (Transaction t : transactions) {
-                boolean valid = false;
-                for (Transaction t2 : t.getRecipient().getTransactionsList().toArray()) {
-                    if (t.getIdentifier() == t2.getIdentifier()) {
-                        valid = true;
-                        break;
-                    }
-                }
-                if (!valid) {
-                    notValid.addTransaction(t);
-                }
-            }
-        }
-        return notValid.toArray();
+        return invalidTransactionList.toArray();
     }
 }
 

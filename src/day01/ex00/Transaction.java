@@ -6,14 +6,14 @@ public class Transaction {
     private final UUID identifier;
     private User recipient;
     private User sender;
-    private int transferAmount;
+    private Integer transferAmount;
     private Category transferCategory;
 
     enum Category {
         DEBIT, CREDIT
     }
 
-    public Transaction(User recipient, User sender, int transferAmount, Category transferCategory) {
+    public Transaction(User recipient, User sender, Integer transferAmount, Category transferCategory) {
         this.identifier = UUID.randomUUID();
         this.recipient = recipient;
         this.sender = sender;

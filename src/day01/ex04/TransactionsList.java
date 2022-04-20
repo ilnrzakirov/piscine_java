@@ -7,5 +7,5 @@ interface TransactionsList {
     void removeTransactionById(UUID id);
     Transaction[] toArray();
     Integer getSize();
-    Transaction getTransactionByIndex(int index);
+    Transaction getTransactionByIndex(Integer index);
 }
