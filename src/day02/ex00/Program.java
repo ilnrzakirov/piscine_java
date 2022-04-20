@@ -41,8 +41,7 @@ public class Program {
         String inputLine = scanner.nextLine();
 
         while (!inputLine.equals(END)){
-            try {
-                FileInputStream inputFile = new FileInputStream(inputLine);
+            try (FileInputStream inputFile = new FileInputStream(inputLine)){
                 byte[] bytes = new byte[BYTE_SIZE];
                 inputFile.read(bytes,0, BYTE_SIZE);
                 String fileSignature = bytesToHex(bytes);
@@ -70,13 +69,11 @@ public class Program {
     }
 
     private static void findSignature(String signature, Map<String, String> signatureMap){
-        FileOutputStream fileOutputStream;
 
-        try{
-            fileOutputStream = new FileOutputStream(RESULT_FILE, true);
+        try (FileOutputStream fileOutputStream = new FileOutputStream(RESULT_FILE, true)) {
 
             for (Map.Entry<String, String> fileSignature : signatureMap.entrySet()) {
-                if (signature.contains(fileSignature.getValue())){
+                if (signature.contains(fileSignature.getValue())) {
                     fileOutputStream.write(fileSignature.getKey().getBytes());
                     fileOutputStream.write('\n');
                     System.out.println(PROCESSED);
@@ -84,7 +81,7 @@ public class Program {
                 }
             }
             System.out.println(UNDEFINED);
-        } catch (Exception error){
+        } catch (Exception error) {
             System.err.println(FNF);
         }
     }
