@@ -21,8 +21,15 @@ public class Program {
         try{
             fileInputStream = new FileInputStream("signatures.txt");
             fileOutputStream = new FileOutputStream("result.txt");
+            Scanner newScanner = new Scanner(fileInputStream);
+            while (newScanner.hasNextLine()){
+                String line = newScanner.nextLine();
+                String[] lineArray = line.split(",");
+                signature.put(lineArray[0], lineArray[1].replaceAll("\\s+", ""));
+            }
         } catch (FileNotFoundException error){
             System.err.println("file not found");
+            System.exit(-1);
         }
         Scanner scanner = new Scanner(System.in);
         String inputLine = scanner.nextLine();
