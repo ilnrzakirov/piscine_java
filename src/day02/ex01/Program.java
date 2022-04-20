@@ -53,8 +53,8 @@ public class Program {
             else {
                 vectorB[i] = frequencyWordB.get(arrayList.get(i));
             }
-
         }
+        double
     }
 
     private static void writeByOutputFile(HashSet<String> dictionary) {
@@ -68,6 +68,21 @@ public class Program {
         }
     }
 
+    private static double similarity(ArrayList<Integer> a, ArrayList<Integer> b) {
+        int numerator = 0;
+        for (int i = 0; i < a.size(); ++i)
+            numerator += a.get(i) * b.get(i);
+        int left = 0;
+        for (Integer ai : a)
+            left += ai * ai;
+        int right = 0;
+        for (Integer bi : b)
+            right += bi * bi;
+        double denominator = Math.sqrt(left) * Math.sqrt(right);
+        if (denominator == 0)
+            return 0;
+        return numerator / denominator;
+    }
 
     public static String getAllLine(String filename){
         StringBuilder sb = new StringBuilder();
