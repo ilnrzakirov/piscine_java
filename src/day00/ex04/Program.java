@@ -5,7 +5,7 @@ public class Program {
     public static void main(String[] argv) {
         Scanner scanner = new Scanner(System.in);
         String inputData = scanner.nextLine();
-        int[] charCount = new int[65535];
+        int[] charCount = new int[65536];
         char[] dataArray = inputData.toCharArray();
         for (int i = 0; i < inputData.length(); i++){
             charCount[dataArray[i]]++;
@@ -16,7 +16,7 @@ public class Program {
         int maxCount = 0;
         int index = 0;
         for (int j = 0; j < 10; j++){
-            for (int i = 0; i < 65535; i++){
+            for (int i = 0; i < 65536; i++){
                 if (charCount[i] > maxCount){
                     maxCount = charCount[i];
                     maxChar = (char) i;

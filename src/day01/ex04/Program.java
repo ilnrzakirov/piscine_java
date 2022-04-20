@@ -15,12 +15,9 @@ public class Program {
         user1.printTransactionList();
         System.out.println();
         user2.printTransactionList();
-        user1.getTransactionsList().addTransaction(new Transaction(user1, user2, 100, Transaction.Category.DEBIT));
         Transaction[] array = transactionsService.getInvalidTransaction();
         System.out.println();
         user1.printTransactionList();
-        for (int i = 0; i < array.length; i++){
-            array[i].printTransferInfo();
-        }
+        transactionsService.executeTransaction(user2.getId(), user1.getId(), 300);
     }
 }

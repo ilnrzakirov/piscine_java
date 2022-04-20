@@ -1,9 +1,9 @@
 package day01.ex02;
 
 public class UsersArrayList implements UserList {
-    private User[] users = new User[10];
-    private int count;
     private int arraySize = 10;
+    private User[] users = new User[arraySize];
+    private int count;
 
     @Override
     public void addUser(User newUser) {

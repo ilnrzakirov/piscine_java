@@ -66,7 +66,7 @@ public class Transaction {
     }
 
     public void printTransferInfo(){
-        System.out.print("Sender: " + this.sender.getName() + ". Recipient: " + this.recipient.getName() );
+        System.out.print(this.sender.getName() + " -> " + this.recipient.getName() );
         System.out.print(". Category: " + this.transferCategory + ". Amount: " + this.transferAmount + "\n");
     }
 
