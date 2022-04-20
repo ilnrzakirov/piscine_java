@@ -1,9 +1,7 @@
 package day02.ex01;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Program {
     private static final String FNF = "File not found";
@@ -22,6 +20,10 @@ public class Program {
 
         ArrayList<String> arrayDataFileA = new ArrayList<>(Arrays.asList(dataFileA.split("\\s+")));
         ArrayList<String> arrayDataFileB = new ArrayList<>(Arrays.asList(dataFileB.split("\\s+")));
+        Map<String, Integer> frequencyWordA;
+        Map<String, Integer> frequencyWordB;
+        frequencyWordA = getCountWord(arrayDataFileA);
+        frequencyWordB = getCountWord(arrayDataFileB);
     }
 
     public static String getAllLine(String filename){
@@ -39,5 +41,16 @@ public class Program {
             System.exit(-1);
         }
         return sb.toString();
+    }
+
+    public static Map<String, Integer> getCountWord(ArrayList<String> wordList){
+        Map<String, Integer> frequencyWord = new HashMap<>();
+
+        for (String word : wordList) {
+            Integer frequency = Collections.frequency(wordList, word);
+            frequencyWord.put(word, frequency);
+        }
+
+        return frequencyWord;
     }
 }
