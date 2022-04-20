@@ -24,7 +24,7 @@ public class TransactionsService {
         User sender = userList.getUserById(senderId);
         User recipient = userList.getUserById(recipientId);
 
-        if (senderId == recipientId || amount < 0){
+        if (senderId == recipientId || amount < 0 || sender.getBalance() < amount){
             throw new IllegalTransactionException("Illegal Transaction");
         }
 
@@ -32,12 +32,6 @@ public class TransactionsService {
         Transaction debit = new Transaction(recipient, sender, amount, Transaction.Category.DEBIT);
         debit.setIdentifier(credit.getIdentifier());
         recipient.getTransactionsList().addTransaction(debit);
-
-        if (sender.getBalance() < amount){
-            invalidTransactionList.addTransaction(credit);
-            throw new IllegalTransactionException("Illegal Transaction");
-        }
-
         sender.getTransactionsList().addTransaction(credit);
         recipient.setBalance(recipient.getBalance() + amount);
         sender.setBalance(sender.getBalance() - amount);
