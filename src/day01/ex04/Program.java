@@ -27,5 +27,6 @@ public class Program {
         while (i < array.length){
             array[i++].printTransferInfo();
         }
+        transactionsService.executeTransaction(user2.getId(), user2.getId(), 300);
     }
 }
