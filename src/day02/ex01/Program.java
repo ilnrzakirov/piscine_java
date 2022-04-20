@@ -54,11 +54,38 @@ public class Program {
                 vectorB[i] = frequencyWordB.get(arrayList.get(i));
             }
         }
-        double
+        double result = createResult(vectorA, vectorB, arrayList);
+        String similarity = String.format("%.3f",result);
+        System.out.println("Similarity = " + similarity.substring(0, similarity.length() - 1));
+    }
+
+    private static double createResult(Integer[] vectorA, Integer[] vectorB, ArrayList<String> arrayList) {
+        Integer numerator = createNumerator(vectorA, vectorB, arrayList);
+        double denominator = createDenominator(vectorA, vectorB, arrayList);
+        return numerator / denominator;
+    }
+
+    private static double createDenominator(Integer[] vectorA, Integer[] vectorB, ArrayList<String> arrayList) {
+        double denominatorA = 0;
+        for (int i = 0; i < arrayList.size(); i++){
+            denominatorA += vectorA[i] * vectorA[i];
+        }
+        double denominatorB = 0;
+        for (int i = 0; i < arrayList.size(); i++){
+            denominatorB += vectorB[i] * vectorB[i];
+        }
+        return Math.sqrt(denominatorA) * Math.sqrt(denominatorB);
+    }
+
+    private static Integer createNumerator(Integer[] vectorA, Integer[] vectorB, ArrayList<String> arrayList) {
+        int sumOfMulRess = 0;
+        for (int i = 0; i < arrayList.size(); i++)
+            sumOfMulRess += vectorA[i] * vectorB[i];
+        return sumOfMulRess;
     }
 
     private static void writeByOutputFile(HashSet<String> dictionary) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream("dictionary.txt", true)){
+        try (FileOutputStream fileOutputStream = new FileOutputStream("dictionary.txt")){
             for (String word : dictionary) {
                 fileOutputStream.write(word.getBytes());
                 fileOutputStream.write('\n');
