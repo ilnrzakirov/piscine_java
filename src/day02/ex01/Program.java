@@ -38,9 +38,23 @@ public class Program {
 
     private static void createVector(HashSet<String> dictionary, Map<String, Integer> frequencyWordA, Map<String, Integer> frequencyWordB) {
         ArrayList<String> arrayList = new ArrayList<>(dictionary);
-        Vector<Integer> vectorA = new Vector<>(dictionary.size());
-        Vector<Integer> vectorB = new Vector<>(dictionary.size());
+        Integer[] vectorA = new Integer[arrayList.size()];
+        Integer[] vectorB = new Integer[arrayList.size()];
+        Collections.sort(arrayList);
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (frequencyWordA.get(arrayList.get(i)) == null)
+                vectorA[i] = 0;
+            else {
+                vectorA[i] = frequencyWordA.get(arrayList.get(i));
+            }
 
+            if (frequencyWordB.get(arrayList.get(i)) == null)
+                vectorB[i] = 0;
+            else {
+                vectorB[i] = frequencyWordB.get(arrayList.get(i));
+            }
+
+        }
     }
 
     private static void writeByOutputFile(HashSet<String> dictionary) {
