@@ -1,6 +1,7 @@
 package day01.ex02;
 
 public class UsersArrayList implements UserList {
+
     private Integer arraySize = 10;
     private User[] users = new User[arraySize];
     private Integer count = 0;
@@ -27,6 +28,7 @@ public class UsersArrayList implements UserList {
                 return users[i];
             }
         }
+
         throw new UserNotFoundException("User not found");
     }
 
@@ -35,6 +37,7 @@ public class UsersArrayList implements UserList {
         if (index <= this.count || index > 0){
             return users[index];
         }
+
         throw new UserNotFoundException("User not found");
     }
 

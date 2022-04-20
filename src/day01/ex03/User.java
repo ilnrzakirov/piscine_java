@@ -1,6 +1,7 @@
 package day01.ex03;
 
 public class User {
+
     private final Integer id;
     private Integer balance;
     private String name;
@@ -28,6 +29,7 @@ public class User {
         else {
             this.balance = 0;
         }
+
         this.name = name;
         this.id = UserIdsGenerator.getInstance().generateId();
         this.transactionsList = new TransactionsLinkedList();

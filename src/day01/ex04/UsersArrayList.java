@@ -1,6 +1,7 @@
 package day01.ex04;
 
 public class UsersArrayList implements UserList {
+
     private Integer arraySize = 10;
     private User[] users = new User[arraySize];
     private Integer count = 0;

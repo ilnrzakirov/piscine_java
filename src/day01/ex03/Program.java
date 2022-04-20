@@ -3,6 +3,7 @@ package day01.ex03;
 import java.util.UUID;
 
 public class Program {
+
     public static void main(String[] args) {
         User user1 = new User(2500, "Bob");
         User user2 = new User(2300, "Tom");
@@ -21,9 +22,11 @@ public class Program {
         list.showTransaction();
         Transaction[] arrayTr = list.toArray();
         System.out.println();
+
         for (int i = 0; i < list.getSize(); i++){
             arrayTr[i].printTransferInfo();
         }
+
         list.removeTransactionById(UUID.randomUUID());
     }
 }

@@ -3,6 +3,7 @@ package day01.ex04;
 import java.util.UUID;
 
 public class Transaction {
+
     private UUID identifier;
     private User recipient;
     private User sender;
@@ -20,7 +21,6 @@ public class Transaction {
         this.sender = sender;
         this.transferCategory = transferCategory;
         setTransferAmount(transferAmount);
-
     }
 
     public Integer getTransferAmount() {

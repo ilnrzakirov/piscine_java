@@ -3,6 +3,7 @@ package day01.ex00;
 import java.util.UUID;
 
 public class Transaction {
+
     private final UUID identifier;
     private User recipient;
     private User sender;

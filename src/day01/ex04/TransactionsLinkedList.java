@@ -4,6 +4,7 @@ package day01.ex04;
 import java.util.UUID;
 
 public class TransactionsLinkedList implements TransactionsList {
+
     private Transaction start;
     private Transaction end;
     private Integer size = 0;
@@ -15,6 +16,7 @@ public class TransactionsLinkedList implements TransactionsList {
         } else {
             this.end.setNext(newTransaction);
         }
+
         this.end = newTransaction;
         size++;
     }
@@ -27,11 +29,13 @@ public class TransactionsLinkedList implements TransactionsList {
         if (this.start != null) {
             temp = this.start.getNext();
             prev = this.start;
+
             if (prev.getIdentifier() == id) {
                 this.start = temp;
                 size--;
                 return;
             }
+
             while (temp != null) {
                 if (temp.getIdentifier() == id) {
                     prev.setNext(temp.getNext());
@@ -42,6 +46,7 @@ public class TransactionsLinkedList implements TransactionsList {
                 temp = prev.getNext();
             }
         }
+
         throw new TransactionNotFoundException("Transaction not found");
     }
 
@@ -50,11 +55,13 @@ public class TransactionsLinkedList implements TransactionsList {
         Transaction[] transactionArray = new Transaction[this.size];
         int i = 0;
         Transaction temp = this.start;
+
         while (temp != null){
             transactionArray[i] = temp;
             i++;
             temp = temp.getNext();
         }
+
         return transactionArray;
     }
 
@@ -64,8 +71,8 @@ public class TransactionsLinkedList implements TransactionsList {
 
     public void showTransaction(){
         Transaction temp;
-
         temp = this.start;
+
         while (temp != null){
             temp.printTransferInfo();
             temp = temp.getNext();

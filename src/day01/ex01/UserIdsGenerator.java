@@ -1,6 +1,7 @@
 package day01.ex01;
 
 public class UserIdsGenerator {
+
     private static UserIdsGenerator object;
     private static Integer identifier = 0;
 

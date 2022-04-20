@@ -1,6 +1,7 @@
 package day01.ex02;
 
 public class Program {
+
     public static void main(String[] args) {
         User user1 = new User(1500, "Bob");
         User user2 = new User(100, "Tom");

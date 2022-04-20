@@ -1,12 +1,14 @@
 package day01.ex00;
 
 public class User {
+
     private Integer identifier;
     private Integer balance;
     private String name;
 
     public User(Integer identifier, Integer balance, String name) {
         this.identifier = identifier;
+
         if (balance > 0) {
             this.balance = balance;
         }

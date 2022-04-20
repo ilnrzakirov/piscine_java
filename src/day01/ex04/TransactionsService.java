@@ -3,6 +3,7 @@ package day01.ex04;
 import java.util.UUID;
 
 public class TransactionsService {
+
     TransactionsList transactionsList = new TransactionsLinkedList();
     UserList userList = new UsersArrayList();
     private TransactionsLinkedList invalidTransactionList = new TransactionsLinkedList();
@@ -22,17 +23,21 @@ public class TransactionsService {
     public void executeTransaction(Integer senderId, Integer recipientId, Integer amount){
         User sender = userList.getUserById(senderId);
         User recipient = userList.getUserById(recipientId);
+
         if (senderId == recipientId || amount < 0){
             throw new IllegalTransactionException("Illegal Transaction");
         }
+
         Transaction credit = new Transaction(sender, recipient, -amount, Transaction.Category.CREDIT);
         Transaction debit = new Transaction(recipient, sender, amount, Transaction.Category.DEBIT);
         debit.setIdentifier(credit.getIdentifier());
         recipient.getTransactionsList().addTransaction(debit);
+
         if (sender.getBalance() < amount){
             invalidTransactionList.addTransaction(credit);
             throw new IllegalTransactionException("Illegal Transaction");
         }
+
         sender.getTransactionsList().addTransaction(credit);
         recipient.setBalance(recipient.getBalance() + amount);
         sender.setBalance(sender.getBalance() - amount);
