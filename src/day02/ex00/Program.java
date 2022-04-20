@@ -1,12 +1,7 @@
 package day02.ex00;
 
-import javafx.beans.binding.When;
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -82,8 +77,10 @@ public class Program {
                     fileOutputStream.write(fileSignature.getKey().getBytes());
                     fileOutputStream.write('\n');
                     System.out.println("PROCESSED");
+                    return;
                 }
             }
+            System.out.println("UNDEFINED");
         } catch (Exception error){
             System.err.println("file not found");
         }
