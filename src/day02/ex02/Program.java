@@ -8,6 +8,10 @@ public class Program {
     private static final String ERRORDIR = "Error: directory not found";
     private static final String CURRENTF = "--current-folder=";
     private static final String TOMANY = "To many arguments";
+    private static final String CD = "cd";
+    private static final String LS = "ls";
+    private static final String MV = "mv";
+    private static final String END = "exit";
 
     public static void main(String[] args) {
         if (args.length != 1 || !args[0].startsWith(CURRENTF)){
@@ -28,7 +32,7 @@ public class Program {
 
         Scanner scanner = new Scanner(System.in);
         String inputLine = scanner.nextLine();
-        while (!inputLine.equals("exit"))
+        while (!inputLine.equals(END))
         {
             if (!inputLine.isEmpty()) {
                 runCommand(inputLine, directory);
@@ -41,7 +45,7 @@ public class Program {
     private static void runCommand(String inputLine, File directory) {
         String[] inputCommand = inputLine.split("\\s+");
         switch (inputCommand[0]) {
-            case "ls":
+            case LS:
                 if (inputCommand.length == 1) {
                     runLs(directory);
                 } else if (inputCommand.length == 2){
@@ -50,7 +54,7 @@ public class Program {
                     System.err.println(TOMANY);
                 }
                 break;
-            case "cd":
+            case CD:
                 if (inputCommand.length == 1){
                     return;
                 } else if (inputCommand.length == 2) {
@@ -59,7 +63,7 @@ public class Program {
                     System.err.println(TOMANY);
                 }
                 break;
-            case "mv":
+            case MV:
                 if (inputCommand.length == 3){
                     ruMv(inputCommand, directory);
                 }
