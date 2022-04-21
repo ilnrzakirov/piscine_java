@@ -41,37 +41,39 @@ public class Program {
     private static void runCommand(String inputLine, File directory) {
         String[] inputCommand = inputLine.split("\\s+");
         switch (inputCommand[0]) {
-            case "ls": {
+            case "ls":
                 if (inputCommand.length == 1) {
                     runLs(inputCommand, directory);
                 } else {
                     System.err.println(TOMANY);
                 }
                 break;
-            }
-            case "cd": {
+            case "cd":
                 if (inputCommand.length == 1){
                     return;
                 } else if (inputCommand.length == 2) {
-                    runCd(inputCommand);
+                    runCd(inputCommand, directory);
                 } else {
                     System.err.println(TOMANY);
                 }
                 break;
-            }
-            case "mv": {
+            case "mv":
                 if (inputCommand.length == 3){
-                    ruMv(inputCommand);
+                    ruMv(inputCommand, directory);
                 }
                 else {
                     System.err.println("Need 2 arguments");
                 }
                 break;
-            }
-            default: {
+            default:
                 System.err.println("Unknown command");
-            }
         }
+    }
+
+    private static void ruMv(String[] inputCommand, File directory) {
+    }
+
+    private static void runCd(String[] inputCommand, File directory) {
     }
 
     private static void runLs(String[] inputCommand, File directory) {
