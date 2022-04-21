@@ -12,6 +12,7 @@ public class Program {
     private static final String LS = "ls";
     private static final String MV = "mv";
     private static final String END = "exit";
+    private static File directory;
 
     public static void main(String[] args) {
         if (args.length != 1 || !args[0].startsWith(CURRENTF)){
@@ -23,7 +24,7 @@ public class Program {
         if (inputPath.isEmpty()){
             System.err.println(ERRORDIR);
         }
-        File directory = new File(inputPath);
+        directory = new File(inputPath);
 
         if (!directory.isDirectory()){
             System.err.println(ERRORDIR);
@@ -35,21 +36,21 @@ public class Program {
         while (!inputLine.equals(END))
         {
             if (!inputLine.isEmpty()) {
-                runCommand(inputLine, directory);
+                runCommand(inputLine);
             }
             inputLine = scanner.nextLine();
         }
         scanner.close();
     }
 
-    private static void runCommand(String inputLine, File directory) {
+    private static void runCommand(String inputLine) {
         String[] inputCommand = inputLine.split("\\s+");
         switch (inputCommand[0]) {
             case LS:
                 if (inputCommand.length == 1) {
-                    runLs(directory);
+                    runLs();
                 } else if (inputCommand.length == 2){
-                    runLs(inputCommand, directory);
+                    runLs(inputCommand);
                 } else {
                     System.err.println(TOMANY);
                 }
@@ -58,14 +59,14 @@ public class Program {
                 if (inputCommand.length == 1){
                     return;
                 } else if (inputCommand.length == 2) {
-                    runCd(inputCommand, directory);
+                    runCd(inputCommand);
                 } else {
                     System.err.println(TOMANY);
                 }
                 break;
             case MV:
                 if (inputCommand.length == 3){
-                    ruMv(inputCommand, directory);
+                    runMv(inputCommand);
                 }
                 else {
                     System.err.println("Need 2 arguments");
@@ -76,25 +77,33 @@ public class Program {
         }
     }
 
-    private static void ruMv(String[] inputCommand, File directory) {
+    private static void runMv(String[] inputCommand) {
     }
 
-    private static void runCd(String[] inputCommand, File directory) {
+    private static void runCd(String[] inputCommand) {
+        String newPath = getPath(inputCommand[1]);
+        File currentPath = new File(newPath);
+        if (currentPath.isDirectory()){
+            directory = currentPath;
+        }
     }
 
-    private static void runLs(String[] inputCommand, File directory) {
-        String newPath = getPath(inputCommand[1], directory);
+    private static void runLs(String[] inputCommand) {
+        String newPath = getPath(inputCommand[1]);
         File currentPath = new File(newPath);
         if (!currentPath.isDirectory()){
             System.err.println(ERRORDIR);
         }
         File[] files = listFiles(currentPath);
         for (File file : files) {
-            System.out.println(file.getName());
+            System.out.print(file.getName());
+            System.out.print(" ");
+            System.out.print(getSize(file) / 1000);
+            System.out.println(" KB");
         }
     }
 
-    private static void runLs(File directory) {
+    private static void runLs() {
         File[] files = listFiles(directory);
         for (File file : files) {
             System.out.print(file.getName());
@@ -104,7 +113,7 @@ public class Program {
         }
     }
 
-    private static String getPath(String name, File directory) {
+    private static String getPath(String name) {
         if (name.startsWith("/")) {
             return name;
         } else if (name.startsWith("./")) {
