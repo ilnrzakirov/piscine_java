@@ -43,6 +43,8 @@ public class Program {
         switch (inputCommand[0]) {
             case "ls":
                 if (inputCommand.length == 1) {
+                    runLs(directory);
+                } else if (inputCommand.length == 2){
                     runLs(inputCommand, directory);
                 } else {
                     System.err.println(TOMANY);
@@ -77,7 +79,53 @@ public class Program {
     }
 
     private static void runLs(String[] inputCommand, File directory) {
+        String newPath = getPath(inputCommand[1], directory);
+        File currentPath = new File(newPath);
+        if (!currentPath.isDirectory()){
+            System.err.println(ERRORDIR);
+        }
+        File[] files = listFiles(currentPath);
+        for (File file : files) {
+            System.out.println(file.getName());
+        }
+    }
 
+    private static void runLs(File directory) {
+        File[] files = listFiles(directory);
+        for (File file : files) {
+            System.out.print(file.getName());
+            System.out.print(" ");
+            System.out.print(getSize(file) / 1000);
+            System.out.println(" KB");
+        }
+    }
+
+    private static String getPath(String name, File directory) {
+        if (name.startsWith("/")) {
+            return name;
+        } else if (name.startsWith("./")) {
+            return  directory + name.substring(1);
+        }
+        return directory + "/" + name;
+    }
+
+    private static File[] listFiles(File file) {
+        File[] files = file.listFiles();
+        if (files == null) {
+            return new File[0];
+        }
+        return files;
+    }
+
+    private static long getSize(File file) {
+        if (!file.isDirectory()) {
+            return file.length();
+        }
+        long size = 0;
+        for (File f : listFiles(file)) {
+            size += getSize(f);
+        }
+        return size;
     }
 
 }
