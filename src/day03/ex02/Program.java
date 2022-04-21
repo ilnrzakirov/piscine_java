@@ -1,5 +1,6 @@
 package day03.ex02;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Program {
@@ -10,7 +11,7 @@ public class Program {
     private static final Integer MIN = -1000;
     private static final Integer MAX = 1000;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         if (args.length != 2 || !args[0].startsWith(SIZE) || !args[1].startsWith(COUNT)){
             System.err.println(ERROR_ARGUMENT);
             System.exit(-1);
@@ -40,6 +41,86 @@ public class Program {
         }
 
         Integer[] intArray = createArray(arraySize);
+        createThreads(arraySize, threadCount, intArray);
+    }
+
+    private static void createThreads(int arraySize, int threadCount, Integer[] intArray) throws InterruptedException {
+        pintSum(intArray);
+        Integer range = arraySize / threadCount;
+        Integer diff = arraySize % threadCount;
+        Integer[] sumList = new Integer[threadCount];
+
+        if (diff == 0){
+            Integer start = 0;
+
+            for (int i = 0; i < threadCount; i++) {
+                Integer st = start;
+                Integer index = i;
+                Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Integer sum = 0;
+                        for (int j = st; j < range + st; j++) {
+                            sum += intArray[j];
+                        }
+                        System.out.println("Thread " + (index + 1) + " form " + st + " to " +
+                                (range + st) + " sum is " + sum);
+                        sumList[index] = sum;
+                    }
+                });
+                thread.start();
+                start += range;
+            }
+
+        } else {
+            Integer start = 0;
+
+            for (int i = 0; i < threadCount; i++) {
+                Integer st = start;
+                Integer index = i;
+                Thread thread = new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Integer sum = 0;
+
+                        for (int j = st; j < range + st + 1; j++) {
+                            sum += intArray[j];
+                            if (j == intArray.length - 1) {
+                                break;
+                            }
+                        }
+                        System.out.println("Thread " + (index + 1) + " form " + st + " to " +
+                                (range + st + 1) + " sum is " + sum);
+                        sumList[index] = sum;
+                    }
+                });
+                thread.start();
+                start += range + 1;
+            }
+        }
+        Thread.sleep(100);
+        printResult(sumList);
+    }
+
+    private static void printResult(Integer[] sumList) {
+        Integer result = 0;
+
+        for (Integer integer : sumList) {
+            result += integer;
+        }
+        System.out.println("Sum by threads: " + result );
+    }
+
+    private static void pintSum(Integer[] intArray) {
+        Integer sumArray = 0;
+
+        for (Integer integer : intArray) {
+            sumArray += integer;
+        }
+
+        System.out.println("Sum: " + sumArray);
     }
 
     private static Integer[] createArray(int arraySize) {
