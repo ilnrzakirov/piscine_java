@@ -88,11 +88,15 @@ public class Program {
         String pathDir = getPath(inputCommand[2]);
         File currentPathFile = new File(pathFile);
         File currentPathDir = new File(pathDir);
-        String pathTo = pathDir + File.separator + currentPathFile.getName();
-        System.out.println(pathFile);
-        System.out.println(pathTo);
+        pathFile = currentPathFile.getPath();
+        pathDir = currentPathDir.getPath();
+        String pathTo = pathDir;
+        System.out.println(pathDir);
+        if (currentPathDir.isDirectory()) {
+            pathTo = pathDir + File.separator + currentPathFile.getName();
+        }
         try {
-            if (currentPathFile.exists() && currentPathDir.isDirectory()){
+            if (currentPathFile.exists()){
                 Files.move(Paths.get(pathFile), Paths.get(pathTo));
             } else {
                 System.err.println(NOFILE);
@@ -143,6 +147,8 @@ public class Program {
             return name;
         } else if (name.startsWith("./")) {
             return  directory + name.substring(1);
+        } else if (name.startsWith("..")) {
+            return directory.getParent() + name.replaceFirst("\\.\\.", "");
         }
         return directory + "/" + name;
     }
