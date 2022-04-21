@@ -96,7 +96,6 @@ public class Program {
         pathFile = currentPathFile.getPath();
         pathDir = currentPathDir.getPath();
         String pathTo = pathDir;
-        System.out.println(pathDir);
 
         if (currentPathDir.isDirectory()) {
             pathTo = pathDir + File.separator + currentPathFile.getName();
