@@ -12,14 +12,14 @@ public class Program {
         }
 
         String inputLine = args[0].replaceFirst(COUNT, "");
-
-        Integer inputCount = 0;
+        int inputCount = 0;
 
         try{
             inputCount = Integer.parseInt(inputLine);
         } catch (NumberFormatException error){
             System.err.println(ERROR_ARGUMENT);
+            System.exit(-1);
         }
-
+        System.out.println(inputCount);
     }
 }
