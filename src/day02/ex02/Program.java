@@ -1,6 +1,9 @@
 package day02.ex02;
 
+import javafx.beans.binding.When;
+
 import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 
@@ -22,5 +25,13 @@ public class Program {
             System.err.println(ERRORDIR);
             System.exit(-1);
         }
+
+        Scanner scanner = new Scanner(System.in);
+        String inputLine = scanner.nextLine();
+        while (!inputLine.equals("exit"))
+        {
+            inputLine = scanner.nextLine();
+        }
+        scanner.close();
     }
 }
