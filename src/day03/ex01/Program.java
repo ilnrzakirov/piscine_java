@@ -21,5 +21,36 @@ public class Program {
             System.exit(-1);
         }
 
+        if (inputCount < 1){
+            System.err.println(ERROR_ARGUMENT);
+            System.exit(-1);
+        }
+        final Integer count = inputCount;
+
+        Producer producer = new Producer();
+        Thread TreadOne = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    producer.printEgg(count);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread TreadTwo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    producer.printHen(count);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        TreadOne.start();
+        TreadTwo.start();
     }
 }

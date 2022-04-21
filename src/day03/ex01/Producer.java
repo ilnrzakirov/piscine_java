@@ -14,7 +14,7 @@ public class Producer {
                 this.lock = 1;
                 notify();
                 count--;
-                Thread.sleep(100);
+                Thread.sleep(1);
             }
         }
     }
@@ -29,7 +29,7 @@ public class Producer {
                 this.lock = 0;
                 notify();
                 count--;
-                Thread.sleep(100);
+                Thread.sleep(1);
             }
         }
     }

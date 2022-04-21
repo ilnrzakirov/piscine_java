@@ -21,6 +21,11 @@ public class Program {
             System.exit(-1);
         }
 
+        if (inputCount < 1){
+            System.err.println(ERROR_ARGUMENT);
+            System.exit(-1);
+        }
+
         ThreadPrint ThreadOne = new ThreadPrint(inputCount, "Egg");
         ThreadPrint ThreadTwo = new ThreadPrint(inputCount, "Hen");
         ThreadOne.start();
