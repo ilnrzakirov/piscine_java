@@ -61,14 +61,18 @@ public class Program {
                     @Override
                     public void run() {
                         Integer sum = 0;
+                        Integer end = 0;
+
                         for (int j = st; j < range + st; j++) {
                             sum += intArray[j];
+                            end =j;
                         }
                         System.out.println("Thread " + (index + 1) + " form " + st + " to " +
-                                (range + st) + " sum is " + sum);
+                                end + " sum is " + sum);
                         sumList[index] = sum;
                     }
                 });
+
                 thread.start();
                 start += range;
             }
@@ -84,22 +88,27 @@ public class Program {
                     @Override
                     public void run() {
                         Integer sum = 0;
+                        Integer end = 0;
 
                         for (int j = st; j < range + st + 1; j++) {
                             sum += intArray[j];
                             if (j == intArray.length - 1) {
                                 break;
                             }
+                            end = j;
                         }
+
                         System.out.println("Thread " + (index + 1) + " form " + st + " to " +
-                                (range + st + 1) + " sum is " + sum);
+                                (end) + " sum is " + sum);
                         sumList[index] = sum;
                     }
                 });
+
                 thread.start();
                 start += range + 1;
             }
         }
+
         Thread.sleep(100);
         printResult(sumList);
     }
