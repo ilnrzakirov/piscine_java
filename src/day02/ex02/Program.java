@@ -85,6 +85,8 @@ public class Program {
         File currentPath = new File(newPath);
         if (currentPath.isDirectory()){
             directory = currentPath;
+        } else {
+            System.err.println(ERRORDIR);
         }
     }
 
