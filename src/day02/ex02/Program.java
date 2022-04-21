@@ -27,6 +27,7 @@ public class Program {
         }
 
         String inputPath = args[0].replaceFirst(CURRENTF, "");
+
         if (inputPath.isEmpty()){
             System.err.println(ERRORDIR);
         }
@@ -39,11 +40,14 @@ public class Program {
 
         Scanner scanner = new Scanner(System.in);
         String inputLine = scanner.nextLine();
+
         while (!inputLine.equals(END))
         {
+
             if (!inputLine.isEmpty()) {
                 runCommand(inputLine);
             }
+
             inputLine = scanner.nextLine();
         }
         scanner.close();
@@ -51,6 +55,7 @@ public class Program {
 
     private static void runCommand(String inputLine) {
         String[] inputCommand = inputLine.split("\\s+");
+
         switch (inputCommand[0]) {
             case LS:
                 if (inputCommand.length == 1) {
@@ -92,9 +97,11 @@ public class Program {
         pathDir = currentPathDir.getPath();
         String pathTo = pathDir;
         System.out.println(pathDir);
+
         if (currentPathDir.isDirectory()) {
             pathTo = pathDir + File.separator + currentPathFile.getName();
         }
+
         try {
             if (currentPathFile.exists()){
                 Files.move(Paths.get(pathFile), Paths.get(pathTo));
@@ -110,6 +117,7 @@ public class Program {
     private static void runCd(String[] inputCommand) {
         String newPath = getPath(inputCommand[1]);
         File currentPath = new File(newPath);
+
         if (currentPath.isDirectory()){
             directory = currentPath;
             System.out.println(currentPath.getPath());
@@ -121,10 +129,12 @@ public class Program {
     private static void runLs(String[] inputCommand) {
         String newPath = getPath(inputCommand[1]);
         File currentPath = new File(newPath);
+
         if (!currentPath.isDirectory()){
             System.err.println(ERRORDIR);
         }
         File[] files = listFiles(currentPath);
+
         for (File file : files) {
             System.out.print(file.getName());
             System.out.print(" ");
@@ -135,6 +145,7 @@ public class Program {
 
     private static void runLs() {
         File[] files = listFiles(directory);
+
         for (File file : files) {
             System.out.print(file.getName());
             System.out.print(" ");
@@ -151,14 +162,17 @@ public class Program {
         } else if (name.startsWith("..")) {
             return directory.getParent() + name.replaceFirst("\\.\\.", "");
         }
+
         return directory + "/" + name;
     }
 
     private static File[] listFiles(File file) {
         File[] files = file.listFiles();
+
         if (files == null) {
             return new File[0];
         }
+
         return files;
     }
 
@@ -166,10 +180,13 @@ public class Program {
         if (!file.isDirectory()) {
             return file.length();
         }
+
         long size = 0;
+
         for (File f : listFiles(file)) {
             size += getSize(f);
         }
+
         return size;
     }
 
