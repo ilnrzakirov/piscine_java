@@ -30,8 +30,15 @@ public class Program {
         String inputLine = scanner.nextLine();
         while (!inputLine.equals("exit"))
         {
+            if (!inputLine.isEmpty()) {
+                runCommand(inputLine);
+            }
             inputLine = scanner.nextLine();
         }
         scanner.close();
+    }
+
+    private static void runCommand(String inputLine) {
+        System.out.println("hihih");
     }
 }
