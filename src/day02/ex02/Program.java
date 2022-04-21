@@ -1,6 +1,9 @@
 package day02.ex02;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Program {
@@ -12,6 +15,9 @@ public class Program {
     private static final String LS = "ls";
     private static final String MV = "mv";
     private static final String END = "exit";
+    private static final String ERROR = "Error";
+    private static final String NOFILE = "No such directory";
+    private static final String KB = " KB";
     private static File directory;
 
     public static void main(String[] args) {
@@ -78,6 +84,23 @@ public class Program {
     }
 
     private static void runMv(String[] inputCommand) {
+        String pathFile = getPath(inputCommand[1]);
+        String pathDir = getPath(inputCommand[2]);
+        File currentPathFile = new File(pathFile);
+        File currentPathDir = new File(pathDir);
+        String pathTo = pathDir + File.separator + currentPathFile.getName();
+        System.out.println(pathFile);
+        System.out.println(pathTo);
+        try {
+            if (currentPathFile.exists() && currentPathDir.isDirectory()){
+                Files.move(Paths.get(pathFile), Paths.get(pathTo));
+            } else {
+                System.err.println(NOFILE);
+            }
+        } catch (IOException error) {
+            System.err.println(ERROR);
+        }
+
     }
 
     private static void runCd(String[] inputCommand) {
@@ -101,7 +124,7 @@ public class Program {
             System.out.print(file.getName());
             System.out.print(" ");
             System.out.print(getSize(file) / 1000);
-            System.out.println(" KB");
+            System.out.println(KB);
         }
     }
 
@@ -111,7 +134,7 @@ public class Program {
             System.out.print(file.getName());
             System.out.print(" ");
             System.out.print(getSize(file) / 1000);
-            System.out.println(" KB");
+            System.out.println(KB);
         }
     }
 
