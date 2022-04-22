@@ -31,7 +31,7 @@ public class Program {
         char symbolWhite = args[0].charAt(0);
         char symbolBlack = args[1].charAt(0);
 
-        try (FileInputStream fileInputStream = new FileInputStream(REM)) {
+        try (FileInputStream fileInputStream = new FileInputStream(PATH_TO_BMP)) {
             ImagesToChar image = new ImagesToChar(fileInputStream, symbolWhite, symbolBlack);
             for (int i = 0; i < image.getHeight(); i++){
                 for ( int j = 0; j < image.getWidth(); j++){
