@@ -8,8 +8,12 @@ import java.io.IOException;
 
 public class ImagesToChar {
     private BufferedImage image;
+    private char symbolWhite;
+    private char SymbolBlack;
 
-    public ImagesToChar(FileInputStream imageFile) throws IOException {
+    public ImagesToChar(FileInputStream imageFile, char symbolWhite, char symbolBlack) throws IOException {
         this.image = ImageIO.read(imageFile);
+        this.symbolWhite = symbolWhite;
+        this.SymbolBlack = symbolBlack;
     }
 }
