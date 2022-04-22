@@ -16,4 +16,24 @@ public class ImagesToChar {
         this.symbolWhite = symbolWhite;
         this.SymbolBlack = symbolBlack;
     }
+
+    public Integer getWidth(){
+        return this.image.getWidth();
+    }
+
+    public Integer getHeight(){
+        return this.image.getHeight();
+    }
+
+    public Integer getRGB(int x, int y){
+        return this.image.getRGB(x, y);
+    }
+
+    public char getSymbolBlack() {
+        return SymbolBlack;
+    }
+
+    public char getSymbolWhite() {
+        return symbolWhite;
+    }
 }
