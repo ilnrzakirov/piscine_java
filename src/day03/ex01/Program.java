@@ -25,10 +25,11 @@ public class Program {
             System.err.println(ERROR_ARGUMENT);
             System.exit(-1);
         }
-        final Integer count = inputCount;
 
+        final Integer count = inputCount;
         Producer producer = new Producer();
         Thread TreadOne = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 try {
@@ -40,6 +41,7 @@ public class Program {
         });
 
         Thread TreadTwo = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 try {

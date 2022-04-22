@@ -7,9 +7,11 @@ public class Producer {
     public void printEgg(Integer count) throws InterruptedException {
         while (count > 0){
             synchronized (this){
+
                 if (lock == 1){
                     wait();
                 }
+
                 System.out.println("Egg");
                 this.lock = 1;
                 notify();
@@ -22,9 +24,11 @@ public class Producer {
     public void printHen(Integer count) throws InterruptedException {
         while (count > 0){
             synchronized (this){
+
                 if (lock == 0){
                     wait();
                 }
+
                 System.out.println("Hen");
                 this.lock = 0;
                 notify();

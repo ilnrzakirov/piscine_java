@@ -119,6 +119,7 @@ public class Program {
         for (Integer integer : sumList) {
             result += integer;
         }
+
         System.out.println("Sum by threads: " + result );
     }
 
@@ -140,6 +141,7 @@ public class Program {
         for (int i = 0; i < arraySize; i++){
             intArray[i] = random.nextInt(diff + 1) + MIN;
         }
+
         return intArray;
     }
 }
