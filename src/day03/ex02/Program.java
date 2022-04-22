@@ -49,6 +49,9 @@ public class Program {
         Integer range = arraySize / threadCount;
         Integer diff = arraySize % threadCount;
         Integer[] sumList = new Integer[threadCount];
+        if (threadCount > arraySize / 2){
+            runThread(range, arraySize, threadCount, intArray);
+        }
 
         if (diff == 0){
             Integer start = 0;
@@ -91,10 +94,10 @@ public class Program {
                         Integer end = 0;
 
                         for (int j = st; j < range + st + 1; j++) {
-                            sum += intArray[j];
-                            if (j == intArray.length - 1) {
+                            if (j > intArray.length - 1) {
                                 break;
                             }
+                            sum += intArray[j];
                             end = j;
                         }
 
@@ -111,6 +114,47 @@ public class Program {
 
         Thread.sleep(100);
         printResult(sumList);
+    }
+
+    private static void runThread(Integer range, int arraySize, int threadCount, Integer[] intArray) throws InterruptedException {
+        Integer[] sumList = new Integer[threadCount];
+        Integer start = 0;
+
+        for (int i = 0; i < threadCount; i++){
+            Integer st = start;
+            Integer index = i;
+            if (i < threadCount -1) {
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Thread " + (index + 1) + " form " + st + " to " +
+                                st + " sum is " + intArray[index]);
+                        sumList[index] = intArray[index];
+                    }
+                });
+                thread.start();
+                start++;
+            }
+            else{
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Integer sum = 0;
+
+                        for (int i = threadCount - 1; i < arraySize; i++){
+                            sum += intArray[i];
+                        }
+                        sumList[threadCount -1] = sum;
+                        System.out.println("Thread " + (threadCount) + " form " + (threadCount -1) + " to " +
+                                (arraySize -1) + " sum is " + intArray[threadCount -1]);
+                    }
+                });
+                thread.start();
+            }
+        }
+        Thread.sleep(100);
+        printResult(sumList);
+        System.exit(0);
     }
 
     private static void printResult(Integer[] sumList) {
