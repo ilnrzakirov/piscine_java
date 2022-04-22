@@ -1,6 +1,6 @@
-package day04.ex00.ImagesToChar.src.java.edu.school21.printer.app;
+package edu.school21.printer.app;
 
-import day04.ex00.ImagesToChar.src.java.edu.school21.printer.logic.ImagesToChar;
+import edu.school21.printer.logic.ImagesToChar;
 
 import java.io.FileInputStream;
 import java.io.IOException;
