@@ -10,6 +10,7 @@ public class Program {
     private static final String PATH_TO_BMP = "/Users/bcarlee/Desktop/Project/piscine_java/src/day04/it.bmp";
     private static final String FILE_NOT_FOUND = "File not found";
     private static final String BAD_ARGUMENT = "Bad argument";
+    private static final String TYPE_ERROR = "Type error";
 
     public static void main(String[] args) {
         if (args.length != 3) {
@@ -20,6 +21,12 @@ public class Program {
             System.err.println(BAD_ARGUMENT);
             System.exit(-1);
         }
+
+        if (args[2].endsWith(".bmp")){
+            System.err.println(TYPE_ERROR);
+            System.exit(-1);
+        }
+
         String pathToBMP = args[2];
         char symbolWhite = args[0].charAt(0);
         char symbolBlack = args[1].charAt(0);
