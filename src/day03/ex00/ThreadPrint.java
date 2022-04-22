@@ -10,6 +10,7 @@ public class ThreadPrint extends Thread {
         this.outputText = outputText;
     }
 
+    @Override
     public void run(){
         for (int i = 0; i < this.count; i++){
             System.out.println(this.outputText);

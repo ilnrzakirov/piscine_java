@@ -1,7 +1,6 @@
 package day04.ex00.ImagesToChar.src.java.edu.school21.printer.app;
 
 import day04.ex00.ImagesToChar.src.java.edu.school21.printer.logic.ImagesToChar;
-import sun.lwawt.macosx.CImage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,6 +13,7 @@ public class Program {
     private static final String TYPE_ERROR = "Type error";
     private static final Integer WHITE = -1;
     private static final Integer BLACK = -16777216;
+    private static final String BMP = ".bmp";
 
     public static void main(String[] args) {
         if (args.length != 3) {
@@ -26,7 +26,7 @@ public class Program {
             System.exit(-1);
         }
 
-        if (!args[2].endsWith(".bmp")){
+        if (!args[2].endsWith(BMP)){
             System.err.println(TYPE_ERROR);
             System.exit(-1);
         }
