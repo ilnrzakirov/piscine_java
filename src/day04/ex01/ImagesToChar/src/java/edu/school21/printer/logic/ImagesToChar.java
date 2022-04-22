@@ -1,4 +1,4 @@
-package day04.ex00.ImagesToChar.src.java.edu.school21.printer.logic;
+package day04.ex01.ImagesToChar.src.java.edu.school21.printer.logic;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
