@@ -35,11 +35,11 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "id=" + id +
-                ", author=" + author +
-                ", room=" + room +
-                ", text='" + text + '\'' +
-                ", dateTime=" + dateTime +
+                "\nid=" + id +
+                ", \nauthor=" + author +
+                ", \nroom=" + room +
+                ", \ntext='" + text + '\'' +
+                ", \ndateTime=" + dateTime +
                 '}';
     }
 }

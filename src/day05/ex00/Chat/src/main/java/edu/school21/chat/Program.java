@@ -22,8 +22,6 @@ public class Program {
 
         if (connection == null){
             System.err.println("Failed to make connection to database");
-        } else {
-            System.out.println("Ok");
         }
 
         testExecute(connection);
