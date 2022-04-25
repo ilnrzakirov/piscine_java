@@ -1,6 +1,5 @@
 package edu.school21.chat;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class Main {
+public class Program {
 
     private static final String DB_URL = "jdbc:postgresql://localhost/postgres";
     private static final String USER = "postgres";
@@ -80,11 +79,7 @@ public class Main {
         Connection connection = null;
 
         try {
-            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
-        } catch (ClassNotFoundException error) {
-            System.err.println(error.getMessage());
-            System.exit(-1);
         } catch (SQLException error) {
             System.err.println("PostgreSQL JDBC Driver is not found");
             System.exit(-1);
