@@ -27,6 +27,12 @@ public class Program {
         }
 
         testExecute(connection);
+
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private static void testExecute(Connection connection) {
