@@ -42,6 +42,7 @@ public class Program {
 
         getData(connection);
         MessagesRepositoryJdbcImpl messagesRepositoryJdbc = new MessagesRepositoryJdbcImpl(dataSource);
+        messagesRepositoryJdbc.findById(1L);
         dataSource.close();
     }
 

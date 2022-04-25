@@ -10,6 +10,13 @@ public class Chatroom {
     private String owner;
     private List<Message> massageList;
 
+    public Chatroom(long id, String name) {
+        this.id = id;
+        this.name = name;
+        this.owner = null;
+        this.massageList = null;
+    }
+
     @Override
     public String toString() {
         return "Chatroom{" +

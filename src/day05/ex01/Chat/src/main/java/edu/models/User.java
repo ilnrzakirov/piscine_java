@@ -11,6 +11,14 @@ public class User {
     private List<Chatroom> myCreatedRooms;
     private List<Chatroom> mySocializesRooms;
 
+    public User(long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.myCreatedRooms = null;
+        this.mySocializesRooms = null;
+    }
+
     @Override
     public String toString() {
         return "User{" +
