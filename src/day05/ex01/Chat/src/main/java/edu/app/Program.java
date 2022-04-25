@@ -59,7 +59,7 @@ public class Program {
         MessagesRepositoryJdbcImpl messagesRepositoryJdbc = new MessagesRepositoryJdbcImpl(dataSource);
 
         if (messagesRepositoryJdbc.findById(messageID).isPresent()) {
-            Message message = messagesRepositoryJdbc.findById(1L).get();
+            Message message = messagesRepositoryJdbc.findById(messageID).get();
             System.out.println(message);
         }
 
