@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public class Message {
 
-    private long id;
+    private Long id;
     private User author;
     private Chatroom room;
     private String text;
     private Timestamp dateTime;
 
-    public Message(long id, User author, Chatroom room, String text, Timestamp dateTime) {
+    public Message(Long id, User author, Chatroom room, String text, Timestamp dateTime) {
         this.id = id;
         this.author = author;
         this.room = room;
@@ -41,5 +41,25 @@ public class Message {
                 ", \ntext='" + text + '\'' +
                 ", \ndateTime=" + dateTime +
                 '}';
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public Chatroom getRoom() {
+        return room;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Timestamp getDateTime() {
+        return dateTime;
     }
 }

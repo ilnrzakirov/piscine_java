@@ -1,5 +1,6 @@
 package edu.repositories;
 
+import edu.app.NotSavedSubEntityException;
 import edu.models.Chatroom;
 import edu.models.Message;
 import edu.models.User;
@@ -33,8 +34,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
         try {
             connection= dataSource.getConnection();
         } catch (SQLException throwables) {
-            System.err.println(ERROR);
-            System.exit(-1);
+            return Optional.empty();
         }
 
         Message message = null;
@@ -45,16 +45,14 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             try {
                 statement = connection.createStatement();
             } catch (SQLException throwables) {
-                System.err.println(ERROR);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             ResultSet setMessage = null;
             try {
                 setMessage = statement.executeQuery("SELECT * FROM chat.messages WHERE id= " + id + ";" );
             } catch (SQLException throwables) {
-                System.err.println(MNF);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             try {
@@ -65,8 +63,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
                 text = setMessage.getString("text");
                 timestamp = setMessage.getTimestamp("time");
             } catch (SQLException | NullPointerException throwables) {
-                System.err.println(MNF);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             ResultSet setUser = null;
@@ -74,8 +71,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             try {
                 setUser = statement.executeQuery("SELECT * FROM chat.users WHERE id= " + author + ";");
             } catch (SQLException throwables) {
-                System.err.println(ERROR);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             try {
@@ -84,8 +80,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
                 String password = setUser.getString("password");
                 user1 = new User(author, login, password);
             } catch (SQLException throwables) {
-                System.err.println(ERROR);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             ResultSet setRoom = null;
@@ -96,8 +91,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
                 String name = setRoom.getString("name");
                 chatroom = new Chatroom(chatroomID, name);
             } catch (SQLException throwables) {
-                System.err.println(ERROR);
-                System.exit(-1);
+                return Optional.empty();
             }
 
             message = new Message(number, user1, chatroom, text, timestamp);
@@ -109,6 +103,89 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
 
     @Override
     public void save(Message message) {
+        Connection connection = null;
 
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+
+        User userMessage = message.getAuthor();
+        Chatroom chatroom = message.getRoom();
+        String messageText = message.getText();
+
+        ResultSet messageSet;
+        PreparedStatement statement = null;
+
+        if (connection == null){
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+        try {
+            statement = connection.prepareStatement("INSERT INTO chat.messages (author, chatroom, text, time) VALUES (?, ?, ?, current_timestamp);");
+            statement.setLong(1, userMessage.getId());
+            statement.setLong(2, chatroom.getId());
+            statement.setString(3, messageText);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throw new NotSavedSubEntityException("User or chat not found");
+        }
+    }
+
+    private boolean findChatRoomByID(long id) {
+        Connection connection = null;
+        ResultSet set;
+
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+
+        if (connection == null){
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            set = statement.executeQuery("SELECT * FROM chat.rooms WHERE id=" + id + ";");
+            statement.close();
+            return set.isFirst();
+        } catch (SQLException throwables) {
+            return false;
+        }
+    }
+
+    private boolean findUserByID(long id) {
+        Connection connection = null;
+        boolean set;
+
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+
+        if (connection == null){
+            System.err.println(ERROR);
+            System.exit(-1);
+        }
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            set = statement.execute("SELECT * FROM chat.users WHERE id=" + id + ";");
+            statement.close();
+            return set;
+        } catch (SQLException throwables) {
+            return false;
+        }
     }
 }

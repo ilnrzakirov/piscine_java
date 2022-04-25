@@ -39,4 +39,16 @@ public class Chatroom {
     public int hashCode() {
         return Objects.hash(id, name, owner, massageList);
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
 }

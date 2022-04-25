@@ -10,7 +10,6 @@ INSERT INTO chat.rooms (name, owner) VALUES ('sport', 3);
 INSERT INTO chat.rooms (name, owner) VALUES ('stalker', 4);
 INSERT INTO chat.rooms (name, owner) VALUES ('animals', 5);
 
-
 INSERT INTO chat.messages (author, chatroom, text, time) VALUES (1, 1, 'BMW car th', current_timestamp);
 INSERT INTO chat.messages (author, chatroom, text, time) VALUES (2, 2, 'painter other s', current_timestamp);
 INSERT INTO chat.messages (author, chatroom, text, time) VALUES (3, 3, 'bol sdf', current_timestamp);

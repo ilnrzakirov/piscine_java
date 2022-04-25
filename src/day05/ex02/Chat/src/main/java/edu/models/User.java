@@ -43,4 +43,19 @@ public class User {
         return Objects.hash(id, login, password, myCreatedRooms, mySocializesRooms);
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
