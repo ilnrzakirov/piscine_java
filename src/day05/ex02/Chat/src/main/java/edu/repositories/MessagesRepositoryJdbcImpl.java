@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Optional;
 
-public class MessagesRepositoryJdbcImpl implements MessagesRepository{
+public class MessagesRepositoryJdbcImpl implements MessagesRepository {
 
     private DataSource dataSource;
     private static final String ERROR = "SQL Error";
@@ -17,7 +17,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
     private static final String REQUEST = "INSERT INTO chat.messages (author, chatroom, text, time) VALUES (?, ?, ?, current_timestamp);";
     private static final String REQUEST_ALL_MESSAGE = "SELECT * FROM chat.messages";
 
-    public MessagesRepositoryJdbcImpl(DataSource dataSource){
+    public MessagesRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -34,14 +34,14 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
 
 
         try {
-            connection= dataSource.getConnection();
+            connection = dataSource.getConnection();
         } catch (SQLException throwables) {
             return Optional.empty();
         }
 
         Message message = null;
 
-        if (connection != null){
+        if (connection != null) {
             Statement statement = null;
 
             try {
@@ -52,7 +52,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
 
             ResultSet setMessage = null;
             try {
-                setMessage = statement.executeQuery("SELECT * FROM chat.messages WHERE id= " + id + ";" );
+                setMessage = statement.executeQuery("SELECT * FROM chat.messages WHERE id= " + id + ";");
             } catch (SQLException throwables) {
                 return Optional.empty();
             }
@@ -120,7 +120,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
         String messageText = message.getText();
         PreparedStatement statement = null;
 
-        if (connection == null){
+        if (connection == null) {
             System.err.println(ERROR);
             System.exit(-1);
         }
@@ -134,7 +134,7 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             ResultSet newMessageSet;
             newMessageSet = statement1.executeQuery(REQUEST_ALL_MESSAGE);
             while (newMessageSet.next()) {
-                if (newMessageSet.isLast()){
+                if (newMessageSet.isLast()) {
                     break;
                 }
             }
@@ -142,60 +142,6 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             message.setId(newId);
         } catch (SQLException throwables) {
             throw new NotSavedSubEntityException("Not Saved");
-        }
-    }
-
-    private boolean findChatRoomByID(long id) {
-        Connection connection = null;
-        ResultSet set;
-
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println(ERROR);
-            System.exit(-1);
-        }
-
-        if (connection == null){
-            System.err.println(ERROR);
-            System.exit(-1);
-        }
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            set = statement.executeQuery("SELECT * FROM chat.rooms WHERE id=" + id + ";");
-            statement.close();
-            return set.isFirst();
-        } catch (SQLException throwables) {
-            return false;
-        }
-    }
-
-    private boolean findUserByID(long id) {
-        Connection connection = null;
-        boolean set;
-
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.err.println(ERROR);
-            System.exit(-1);
-        }
-
-        if (connection == null){
-            System.err.println(ERROR);
-            System.exit(-1);
-        }
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            set = statement.execute("SELECT * FROM chat.users WHERE id=" + id + ";");
-            statement.close();
-            return set;
-        } catch (SQLException throwables) {
-            return false;
         }
     }
 }
