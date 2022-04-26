@@ -1,5 +1,7 @@
-package edu.school21.numbers;
+package edu;
 
+import edu.school21.numbers.IllegalNumberException;
+import edu.school21.numbers.NumberWorker;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
