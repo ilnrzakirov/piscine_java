@@ -14,6 +14,8 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
     private DataSource dataSource;
     private static final String ERROR = "SQL Error";
     private static final String MNF = "Massage not found";
+    private static final String REQUEST = "INSERT INTO chat.messages (author, chatroom, text, time) VALUES (?, ?, ?, current_timestamp);";
+    private static final String REQUEST_ALL_MESSAGE = "SELECT * FROM chat.messages";
 
     public MessagesRepositoryJdbcImpl(DataSource dataSource){
         this.dataSource = dataSource;
@@ -123,19 +125,21 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             System.exit(-1);
         }
         try {
-            statement = connection.prepareStatement("INSERT INTO chat.messages (author, chatroom, text, time) VALUES (?, ?, ?, current_timestamp);");
+            statement = connection.prepareStatement(REQUEST);
             statement.setLong(1, userMessage.getId());
             statement.setLong(2, chatroom.getId());
             statement.setString(3, messageText);
             statement.execute();
             Statement statement1 = connection.createStatement();
             ResultSet newMessageSet;
-            newMessageSet = statement1.executeQuery("SELECT * FROM chat.messages");
+            newMessageSet = statement1.executeQuery(REQUEST_ALL_MESSAGE);
             while (newMessageSet.next()) {
-                Long newId = newMessageSet.getLong("id");
-                message.setId(newId);
+                if (newMessageSet.isLast()){
+                    break;
+                }
             }
-            System.out.println(message.getId());
+            Long newId = newMessageSet.getLong("id");
+            message.setId(newId);
         } catch (SQLException throwables) {
             throw new NotSavedSubEntityException("Not Saved");
         }

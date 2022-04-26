@@ -6,6 +6,7 @@ import edu.models.Message;
 import edu.models.User;
 import edu.repositories.MessagesRepositoryJdbcImpl;
 
+import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -50,7 +51,11 @@ public class Program {
         User user1 = new User(2, "Banny", "pass");
         Chatroom chatroom = new Chatroom(1, "random");
         Message message = new Message(null, user1, chatroom, "message mesge", Timestamp.valueOf(LocalDateTime.now()));
+        Message message1 = new Message(null, user1, chatroom, "messsge", Timestamp.valueOf(LocalDateTime.now()));
         messagesRepositoryJdbc.save(message);
+        messagesRepositoryJdbc.save(message1);
+        System.out.println(message.getId());
+        System.out.println(message1.getId());
         dataSource.close();
     }
 
