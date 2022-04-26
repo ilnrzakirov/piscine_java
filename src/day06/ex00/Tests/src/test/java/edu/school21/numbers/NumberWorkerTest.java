@@ -31,7 +31,13 @@ class NumberWorkerTest {
 
     @ParameterizedTest
     @CsvFileSource (resources = "/data.csv")
-    void digitsSum(int number, int sum) {
+    void isDigitsSumCorrect(int number, int sum) {
         assertEquals(numberWorker.digitsSum(number), sum);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource (resources = "/data1.csv")
+    void isDigitsSumIncorrect(int number, int sum) {
+        assertNotEquals(numberWorker.digitsSum(number), sum);
     }
 }
