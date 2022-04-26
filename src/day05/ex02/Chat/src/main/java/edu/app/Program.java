@@ -49,7 +49,7 @@ public class Program {
         MessagesRepositoryJdbcImpl messagesRepositoryJdbc = new MessagesRepositoryJdbcImpl(dataSource);
         User user1 = new User(2, "Banny", "pass");
         Chatroom chatroom = new Chatroom(1, "random");
-        Message message = new Message(null, user1, chatroom, "message message", Timestamp.valueOf(LocalDateTime.now()));
+        Message message = new Message(null, user1, chatroom, "message mesge", Timestamp.valueOf(LocalDateTime.now()));
         messagesRepositoryJdbc.save(message);
         dataSource.close();
     }

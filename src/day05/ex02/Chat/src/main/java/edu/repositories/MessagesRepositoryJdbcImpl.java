@@ -116,8 +116,6 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
         User userMessage = message.getAuthor();
         Chatroom chatroom = message.getRoom();
         String messageText = message.getText();
-
-        ResultSet messageSet;
         PreparedStatement statement = null;
 
         if (connection == null){
@@ -130,8 +128,16 @@ public class MessagesRepositoryJdbcImpl implements MessagesRepository{
             statement.setLong(2, chatroom.getId());
             statement.setString(3, messageText);
             statement.execute();
+            Statement statement1 = connection.createStatement();
+            ResultSet newMessageSet;
+            newMessageSet = statement1.executeQuery("SELECT * FROM chat.messages");
+            while (newMessageSet.next()) {
+                Long newId = newMessageSet.getLong("id");
+                message.setId(newId);
+            }
+            System.out.println(message.getId());
         } catch (SQLException throwables) {
-            throw new NotSavedSubEntityException("User or chat not found");
+            throw new NotSavedSubEntityException("Not Saved");
         }
     }
 

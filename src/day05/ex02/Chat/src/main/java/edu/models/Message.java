@@ -62,4 +62,8 @@ public class Message {
     public Timestamp getDateTime() {
         return dateTime;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
