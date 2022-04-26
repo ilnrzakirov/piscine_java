@@ -47,7 +47,7 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/hsqldb/hsqldb -->
         <dependency>
-            <groupId>hsqldb</groupId>
+            <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.10</version>
             <scope>test</scope>
