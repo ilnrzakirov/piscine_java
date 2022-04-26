@@ -7,7 +7,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ProductsRepositoryJdbcImplTest {
 
@@ -28,13 +31,13 @@ public class ProductsRepositoryJdbcImplTest {
     }
 
     @ParameterizedTest
-    @ValueSource (ints = 1)
-    void findByIDTest(int id){
+    @ValueSource(ints = 1)
+    void findByIDTest(int id) {
         Assertions.assertEquals(1, EXPECTED_FIND_BY_ID_PRODUCT.getId());
     }
 
     @Test
-    void updateTest(){
+    void updateTest() {
         Product product = productsReposutoryJdbc.findById(0L).get();
         product.setName("Tools");
         product.setPrice(400);
@@ -47,10 +50,10 @@ public class ProductsRepositoryJdbcImplTest {
     }
 
     @Test
-    void saveTest(){
+    void saveTest() {
         ProductsReposutoryJdbcImpl productsReposutoryJdbc = new ProductsReposutoryJdbcImpl();
         List<Product> allLineBD = productsReposutoryJdbc.findAll();
-        Product inspectedProduct = new Product(null ,"Tools", 500);
+        Product inspectedProduct = new Product(null, "Tools", 500);
         productsReposutoryJdbc.save(inspectedProduct);
         List<Product> inspectAllLineBD = productsReposutoryJdbc.findAll();
         Integer sizePre = 0;
@@ -63,12 +66,12 @@ public class ProductsRepositoryJdbcImplTest {
         }
         Assertions.assertNotEquals(sizePre, sizePost);
         Assertions.assertEquals(sizePre, sizePost - 1);
-        Assertions.assertEquals("Tools", inspectAllLineBD.get(sizePost -1).getName());
+        Assertions.assertEquals("Tools", inspectAllLineBD.get(sizePost - 1).getName());
         Assertions.assertEquals(500, inspectAllLineBD.get(sizePost - 1).getPrice());
     }
 
     @Test
-    void deleteTest(){
+    void deleteTest() {
         ProductsReposutoryJdbcImpl productsReposutoryJdbc = new ProductsReposutoryJdbcImpl();
         List<Product> allLineBD = productsReposutoryJdbc.findAll();
         productsReposutoryJdbc.delete(0L);
