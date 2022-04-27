@@ -21,6 +21,16 @@ import java.util.Set;
 @AutoService(Process.class)
 public class HtmlProcessor extends AbstractProcessor {
 
+    public static final String FORM_ACTION = "<form action = \"";
+    public static final String METHOD = "\" method = \"";
+    public static final String STR = "\">\n";
+    public static final String INPUT_TYPE = "\t<input type = ";
+    public static final String NAME = "\" name = \"";
+    public static final String PLACEHOLDER = "\" placeholder = \"";
+    public static final String STR1 = "\">\n";
+    public static final String INPUT_TYPE_SUBMIT_VALUE_SEND_FORM = "\t<input type = \"submit\" value = \"Send\">\n</form>";
+    public static final String TARGET_CLASSES = "target/classes/";
+
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
 
@@ -31,11 +41,11 @@ public class HtmlProcessor extends AbstractProcessor {
         StringBuilder stringBuilder = new StringBuilder();
         for (Element userForm : roundEnv.getElementsAnnotatedWith(HtmlForm.class)) {
             HtmlForm htmlFormAnn = userForm.getAnnotation(HtmlForm.class);
-            stringBuilder.append("<form action = \"");
+            stringBuilder.append(FORM_ACTION);
             stringBuilder.append(htmlFormAnn.action());
-            stringBuilder.append("\" method = \"");
+            stringBuilder.append(METHOD);
             stringBuilder.append(htmlFormAnn.method());
-            stringBuilder.append("\">\n");
+            stringBuilder.append(STR);
             List<? extends Element> userFormElements = userForm.getEnclosedElements();
 
             for (Element field : roundEnv.getElementsAnnotatedWith(HtmlInput.class)) {
@@ -45,17 +55,17 @@ public class HtmlProcessor extends AbstractProcessor {
                 }
 
                 HtmlInput htmlInputAnn = field.getAnnotation(HtmlInput.class);
-                stringBuilder.append("\t<input type = ");
+                stringBuilder.append(INPUT_TYPE);
                 stringBuilder.append(htmlInputAnn.type());
-                stringBuilder.append("\" name = \"");
+                stringBuilder.append(NAME);
                 stringBuilder.append(htmlInputAnn.name());
-                stringBuilder.append("\" placeholder = \"");
+                stringBuilder.append(PLACEHOLDER);
                 stringBuilder.append(htmlInputAnn.placeholder());
-                stringBuilder.append("\">\n");
+                stringBuilder.append(STR1);
             }
-            stringBuilder.append("\t<input type = \"submit\" value = \"Send\">\n</form>");
+            stringBuilder.append(INPUT_TYPE_SUBMIT_VALUE_SEND_FORM);
 
-            try (BufferedWriter writter = new BufferedWriter(new FileWriter("target/classes/" +
+            try (BufferedWriter writter = new BufferedWriter(new FileWriter(TARGET_CLASSES +
                     htmlFormAnn.fileName()))) {
                 writter.write(stringBuilder.toString());
             } catch (IOException ex) {
