@@ -8,10 +8,15 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
-@SupportedAnnotationTypes({"HtmlForm", "HtmlInput"})
+@SupportedAnnotationTypes({"classes.HtmlForm", "classes.HtmlInput"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Process.class)
 public class HtmlProcessor extends AbstractProcessor {
@@ -21,13 +26,27 @@ public class HtmlProcessor extends AbstractProcessor {
         if (annotations.isEmpty()) {
             return false;
         }
-        for (TypeElement annotation : annotations) {
-            Set<? extends Element> elements = roundEnv.getElementsAnnotatedWith(annotation);
-            for (Element element : elements) {
-                TypeElement typeElement = (TypeElement) element.getEnclosingElement();
-
+        for (Element userForm : roundEnv.getElementsAnnotatedWith(HtmlForm.class)) {
+            HtmlForm htmlFormAnn = userForm.getAnnotation(HtmlForm.class);
+            String line = "<form action = \"" + htmlFormAnn.action() + "\" method = \"" + htmlFormAnn.method() + "\">\n";
+            List<? extends Element> userFormElements = userForm.getEnclosedElements();
+            for (Element field : roundEnv.getElementsAnnotatedWith(HtmlInput.class)) {
+                if (!userFormElements.contains(field)) {
+                    continue;
+                }
+                HtmlInput htmlInputAnn = field.getAnnotation(HtmlInput.class);
+                line += "\t<input type = " + htmlInputAnn.type() + "\" name = \"" +
+                        htmlInputAnn.name() + "\" placeholder = \"" + htmlInputAnn.placeholder() + "\">\n";
+            }
+            line += "\t<input type = \"submit\" value = \"Send\">\n</form>";
+            try (BufferedWriter writter = new BufferedWriter(new FileWriter("target/classes/" + htmlFormAnn.fileName()))) {
+                writter.write(line);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
+
+
         return false;
     }
 }
