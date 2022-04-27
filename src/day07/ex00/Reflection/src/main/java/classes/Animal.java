@@ -8,8 +8,9 @@ public class Animal {
     private boolean alive;
     private Long id;
 
-    public void greeting(String name){
+    public Integer greeting(String name){
         System.out.println(name);
+        return (5454545);
     }
 
     public Animal(){

@@ -9,7 +9,7 @@ public class Person {
     private Long id;
 
     public void speak(String name, Long is){
-        System.out.println(name + " " + id);
+        System.out.println(name + " " + is);
     }
 
     public Person() {
