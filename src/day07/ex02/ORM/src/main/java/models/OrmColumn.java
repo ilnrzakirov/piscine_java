@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface OrmColumn {
     String name();
-    int length();
+    int length() default 2;
 }
