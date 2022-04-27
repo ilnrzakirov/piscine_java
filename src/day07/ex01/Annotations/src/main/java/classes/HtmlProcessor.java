@@ -23,29 +23,45 @@ public class HtmlProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+
         if (annotations.isEmpty()) {
             return false;
         }
+
+        StringBuilder stringBuilder = new StringBuilder();
         for (Element userForm : roundEnv.getElementsAnnotatedWith(HtmlForm.class)) {
             HtmlForm htmlFormAnn = userForm.getAnnotation(HtmlForm.class);
-            String line = "<form action = \"" + htmlFormAnn.action() + "\" method = \"" + htmlFormAnn.method() + "\">\n";
+            stringBuilder.append("<form action = \"");
+            stringBuilder.append(htmlFormAnn.action());
+            stringBuilder.append("\" method = \"");
+            stringBuilder.append(htmlFormAnn.method());
+            stringBuilder.append("\">\n");
             List<? extends Element> userFormElements = userForm.getEnclosedElements();
+
             for (Element field : roundEnv.getElementsAnnotatedWith(HtmlInput.class)) {
+
                 if (!userFormElements.contains(field)) {
                     continue;
                 }
+
                 HtmlInput htmlInputAnn = field.getAnnotation(HtmlInput.class);
-                line += "\t<input type = " + htmlInputAnn.type() + "\" name = \"" +
-                        htmlInputAnn.name() + "\" placeholder = \"" + htmlInputAnn.placeholder() + "\">\n";
+                stringBuilder.append("\t<input type = ");
+                stringBuilder.append(htmlInputAnn.type());
+                stringBuilder.append("\" name = \"");
+                stringBuilder.append(htmlInputAnn.name());
+                stringBuilder.append("\" placeholder = \"");
+                stringBuilder.append(htmlInputAnn.placeholder());
+                stringBuilder.append("\">\n");
             }
-            line += "\t<input type = \"submit\" value = \"Send\">\n</form>";
-            try (BufferedWriter writter = new BufferedWriter(new FileWriter("target/classes/" + htmlFormAnn.fileName()))) {
-                writter.write(line);
+            stringBuilder.append("\t<input type = \"submit\" value = \"Send\">\n</form>");
+
+            try (BufferedWriter writter = new BufferedWriter(new FileWriter("target/classes/" +
+                    htmlFormAnn.fileName()))) {
+                writter.write(stringBuilder.toString());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-
 
         return false;
     }
