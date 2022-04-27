@@ -98,6 +98,7 @@ public class Program {
             e.printStackTrace();
         }
 
+        System.out.println("-----------------------");
         System.out.println("Enter name of the field for changing: ");
         String fieldName = scanner.nextLine();
 
@@ -117,7 +118,9 @@ public class Program {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
         System.out.println("Object updated: " + object);
+        System.out.println("-----------------------\nEnter name of the method for call: ");
     }
 
     private static Object getParamObject(Parameter parameter, Scanner scanner) {
