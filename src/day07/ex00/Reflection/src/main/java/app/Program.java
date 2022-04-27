@@ -84,7 +84,7 @@ public class Program {
                         }
                     }
                     System.out.println("\t" + method.getReturnType().getSimpleName() + " " + method.getName() +
-                            " (" + parametrs + ")");
+                            "(" + parametrs + ")");
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -169,12 +169,12 @@ public class Program {
                     parametrs.append(clazz[i].getSimpleName());
                 }
             }
-
             if (inputLine.equals(method.getName() +"(" + parametrs +")")){
                 List<Object> constructorParam = new ArrayList<>();
                 Parameter[] parameters = method.getParameters();
 
                 for (Parameter parameter : parameters) {
+                    System.out.println("Enter " + parameter.getType().getSimpleName() +   " value:");
                     constructorParam.add(getParamObject(parameter, scanner));
                 }
                 method.setAccessible(true);
@@ -185,16 +185,16 @@ public class Program {
                     } else {
                         System.out.println(METHOD_RETURNED + method.invoke(object, constructorParam.toArray()));
                     }
+                    return;
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     System.err.println(INCORRECT_PARAM);
                     System.exit(-1);
                 }
-            } else {
-                System.err.println(METHOD_NOT_FOUND);
-                System.exit(-1);
+                System.out.println(method.getName() + "(" + parametrs + ")");
             }
         }
-
+        System.err.println(METHOD_NOT_FOUND);
+        System.exit(-1);
     }
 
     private static Object getParamObject(Parameter parameter, Scanner scanner) {
