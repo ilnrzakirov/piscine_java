@@ -9,28 +9,52 @@ public class Program {
 
     private static final String CLASSES = "classes.";
     private static final String ERROR = "Error";
+    public static final String STRING = "string";
+    public static final String INT = "int";
+    public static final String INTEGER = "integer";
+    public static final String BOOLEAN = "boolean";
+    public static final String LONG = "long";
+    public static final String DOUBLE = "double";
+    public static final String ERROR1 = "Error";
+    public static final String TYPE_ERROR = "Type error";
+    public static final String INCORRECT_PARAM = "Incorrect param";
+    public static final String METHOD_RETURNED = "Method returned:\n";
+    public static final String VOID = "void";
+    public static final String ENTER_NAME_OF_THE_METHOD_FOR_CALL = "-----------------------\nEnter name of the method for call: ";
+    public static final String INCORRECT_PARAM1 = "Incorrect param";
+    public static final String ENTER_NAME_OF_THE_FIELD_FOR_CHANGING = "Enter name of the field for changing: ";
+    public static final String X = "-----------------------";
+    public static final String OBJECT_CREATED = "Object created: ";
+    public static final String LET_S_CREATE_AN_OBJECT = "Let’s create an object.";
+    public static final String TO_STRING = "toString";
+    public static final String METHODS = "methods:";
+    public static final String FIELDS = "fields:";
+    public static final String CLASS_NOT_FOUND = "Class not found";
+    public static final String ENTER_CLASS_NAME = "Enter class name: ";
+    public static final String CLASSES1 = "Classes:";
+    public static final String METHOD_NOT_FOUND = "Method not found";
 
     public static void main(String[] args) {
         Animal animal = new Animal();
         Person person = new Person();
         Checker checker = new Checker();
-        System.out.println("Classes:");
+        System.out.println(CLASSES1);
         String animalClassName = checker.getClassName(animal);
         String personClassName = checker.getClassName(person);
         System.out.println("-  " + animalClassName);
         System.out.println("-  " + personClassName);
-        System.out.println("-----------------------");
+        System.out.println(X);
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter class name: ");
+        System.out.println(ENTER_CLASS_NAME);
         String inputLine = scanner.nextLine();
 
         if (!inputLine.equals(checker.getClassName(animal)) && !inputLine.equals(checker.getClassName(person))){
-            System.err.println("Class not found");
+            System.err.println(CLASS_NOT_FOUND);
             System.exit(-1);
         }
 
-        System.out.println("-----------------------");
-        System.out.println("fields:");
+        System.out.println(X);
+        System.out.println(FIELDS);
         Field[] fields = null;
         Method[] methods = null;
         Class getClass = null;
@@ -44,10 +68,10 @@ public class Program {
                 System.out.println("\t" + field.getType().getSimpleName() + " " + field.getName());
             }
 
-            System.out.println("methods:");
+            System.out.println(METHODS);
 
             for (Method method : methods) {
-                if (!method.getName().equals("toString")) {
+                if (!method.getName().equals(TO_STRING)) {
                     Class<?>[] clazz = method.getParameterTypes();
                     StringBuilder parametrs = new StringBuilder();
 
@@ -68,8 +92,8 @@ public class Program {
             System.exit(-1);
         }
 
-        System.out.println("-----------------------");
-        System.out.println("Let’s create an object.");
+        System.out.println(X);
+        System.out.println(LET_S_CREATE_AN_OBJECT);
         Constructor constructorClass = null;
         Constructor[] constructors = getClass.getDeclaredConstructors();
         Parameter[] parameters = null;
@@ -93,7 +117,7 @@ public class Program {
             scanner.nextLine();
         }
 
-        System.out.print("Object created: ");
+        System.out.print(OBJECT_CREATED);
         Object object = null;
 
         try {
@@ -104,8 +128,8 @@ public class Program {
             System.exit(-1);
         }
 
-        System.out.println("-----------------------");
-        System.out.println("Enter name of the field for changing: ");
+        System.out.println(X);
+        System.out.println(ENTER_NAME_OF_THE_FIELD_FOR_CHANGING);
         String fieldName = scanner.nextLine();
         int i = 0;
 
@@ -121,12 +145,12 @@ public class Program {
         try {
             fields[i].set(object, object1);
         } catch (IllegalAccessException e) {
-            System.err.println("Incorrect param");
+            System.err.println(INCORRECT_PARAM1);
             System.exit(-1);
         }
 
         System.out.println("Object updated: " + object);
-        System.out.println("-----------------------\nEnter name of the method for call: ");
+        System.out.println(ENTER_NAME_OF_THE_METHOD_FOR_CALL);
         runMethod(methods, object, scanner);
     }
 
@@ -156,15 +180,18 @@ public class Program {
                 method.setAccessible(true);
 
                 try {
-                    if (method.getReturnType().getSimpleName().equals("void")) {
+                    if (method.getReturnType().getSimpleName().equals(VOID)) {
                         method.invoke(object, constructorParam.toArray());
                     } else {
-                        System.out.println("Method returned:\n" + method.invoke(object, constructorParam.toArray()));
+                        System.out.println(METHOD_RETURNED + method.invoke(object, constructorParam.toArray()));
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {
-                    System.err.println("Incorrect param");
+                    System.err.println(INCORRECT_PARAM);
                     System.exit(-1);
                 }
+            } else {
+                System.err.println(METHOD_NOT_FOUND);
+                System.exit(-1);
             }
         }
 
@@ -174,23 +201,23 @@ public class Program {
         String paramName = parameter.getType().getSimpleName().toLowerCase();
         try {
             switch (paramName) {
-                case "string":
+                case STRING:
                     return scanner.nextLine();
-                case "int":
-                case "integer":
+                case INT:
+                case INTEGER:
                     return scanner.nextInt();
-                case "boolean":
+                case BOOLEAN:
                     return scanner.nextBoolean();
-                case "long":
+                case LONG:
                     return scanner.nextLong();
-                case "double":
+                case DOUBLE:
                     return scanner.nextDouble();
                 default:
-                    System.err.println("Error");
+                    System.err.println(ERROR1);
                     System.exit(-1);
             }
         } catch (InputMismatchException error) {
-            System.err.println("Type error");
+            System.err.println(TYPE_ERROR);
             System.exit(-1);
         }
         return null;
