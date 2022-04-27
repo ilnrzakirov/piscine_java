@@ -8,8 +8,8 @@ public class Person {
     private boolean alive;
     private Long id;
 
-    public void speak(){
-        System.out.println("I am speaking");
+    public void speak(String name, Long is){
+        System.out.println(name + " " + id);
     }
 
     public Person() {
