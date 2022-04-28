@@ -2,8 +2,12 @@ package app;
 
 import classes.Animal;
 import classes.Person;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Program {
 
@@ -35,20 +39,26 @@ public class Program {
     public static final String METHOD_NOT_FOUND = "Method not found";
 
     public static void main(String[] args) {
-        Animal animal = new Animal();
-        Person person = new Person();
-        Checker checker = new Checker();
+        Reflections reflections;
+        reflections = new Reflections("classes", new SubTypesScanner(false));
+        Set<Class<?>> set = reflections.getSubTypesOf(Object.class);
+
+        List<String> classes = set.stream()
+                .map(Class::getSimpleName)
+                .collect(Collectors.toList());
         System.out.println(CLASSES1);
-        String animalClassName = checker.getClassName(animal);
-        String personClassName = checker.getClassName(person);
-        System.out.println("-  " + animalClassName);
-        System.out.println("-  " + personClassName);
+
+        for (String aClass : classes) {
+            System.out.println("-  " + aClass);
+        }
+
+        Checker checker = new Checker();
         System.out.println(X);
         Scanner scanner = new Scanner(System.in);
         System.out.println(ENTER_CLASS_NAME);
         String inputLine = scanner.nextLine();
 
-        if (!inputLine.equals(checker.getClassName(animal)) && !inputLine.equals(checker.getClassName(person))){
+        if (!classes.contains(inputLine)){
             System.err.println(CLASS_NOT_FOUND);
             System.exit(-1);
         }
