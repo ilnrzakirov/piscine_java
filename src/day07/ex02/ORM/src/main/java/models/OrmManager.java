@@ -5,6 +5,7 @@ import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -156,6 +157,28 @@ public class OrmManager {
     }
 
     public <T> T findById(Long id, Class<T> aClass){
+        if (!aClass.isAnnotationPresent(OrmEntity.class)){
+            return null;
+        }
+
+        OrmEntity ormEntity = aClass.getAnnotation(OrmEntity.class);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("SELECT * FROM ");
+        stringBuilder.append(ormEntity.table());
+        stringBuilder.append(" WHERE id=");
+        stringBuilder.append(id);
+        stringBuilder.append(";");
+        ResultSet tableSet = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            System.out.println(stringBuilder.toString());
+            tableSet = statement.executeQuery(stringBuilder.toString());
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return null;
     }
 }
