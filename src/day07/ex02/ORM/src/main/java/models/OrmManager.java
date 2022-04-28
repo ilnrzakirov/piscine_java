@@ -1,8 +1,10 @@
 package models;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zaxxer.hikari.HikariDataSource;
 import org.reflections.Reflections;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -135,6 +137,7 @@ public class OrmManager {
                 if (i != fields.length - 1){
                     stringBuilder.append(", ");
                 }
+                fields[i].setAccessible(false);
 
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -169,16 +172,34 @@ public class OrmManager {
         stringBuilder.append(id);
         stringBuilder.append(";");
         ResultSet tableSet = null;
+        T object = null;
 
         try {
             Statement statement = connection.createStatement();
             System.out.println(stringBuilder.toString());
             tableSet = statement.executeQuery(stringBuilder.toString());
+            object = aClass.newInstance();
+            tableSet.next();
 
-        } catch (SQLException throwables) {
+            if (tableSet == null){
+                return null;
+            }
+
+            Field[] fields = aClass.getDeclaredFields();
+
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (field.isAnnotationPresent(OrmColumnId.class)){
+                    field.set(object, tableSet.getLong("id"));
+                } else if (field.isAnnotationPresent(OrmColumn.class)){
+                    OrmColumn ormColumn = field.getAnnotation(OrmColumn.class);
+                    field.set(object, tableSet.getObject(ormColumn.name()));
+                }
+
+            }
+        } catch (SQLException | InstantiationException | IllegalAccessException throwables) {
             throwables.printStackTrace();
         }
-
-        return null;
+        return object;
     }
 }

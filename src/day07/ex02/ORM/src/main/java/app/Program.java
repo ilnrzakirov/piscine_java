@@ -11,7 +11,8 @@ public class Program {
         ormManager.init();
         User user = new User(1L, "Tom", "Djery", 2);
         ormManager.save(user);
-        user.setAge(5);
-        ormManager.findById(user.getId(), user.getClass());
+        User user2;
+        user2 = ormManager.findById(user.getId(), User.class);
+        System.out.println(user2);
     }
 }
