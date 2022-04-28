@@ -42,7 +42,6 @@ public class Program {
         Reflections reflections;
         reflections = new Reflections("classes", new SubTypesScanner(false));
         Set<Class<?>> set = reflections.getSubTypesOf(Object.class);
-
         List<String> classes = set.stream()
                 .map(Class::getSimpleName)
                 .collect(Collectors.toList());
