@@ -9,4 +9,9 @@ public class RendererStandardImpl implements Renderer {
     public RendererStandardImpl(PreProcessor preProcessor) {
         this.preProcessor = preProcessor;
     }
+
+    @Override
+    public void print(String str) {
+        System.out.print(str);
+    }
 }

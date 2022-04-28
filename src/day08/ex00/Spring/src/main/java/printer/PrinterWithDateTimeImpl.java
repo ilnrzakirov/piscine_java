@@ -2,6 +2,9 @@ package printer;
 
 import renderer.Renderer;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class PrinterWithDateTimeImpl implements Printer {
 
     private Renderer renderer;
@@ -11,11 +14,7 @@ public class PrinterWithDateTimeImpl implements Printer {
     }
 
     @Override
-    public void setPrefix(String prefix) {
-    }
-
-    @Override
     public void print(String str) {
-
+        renderer.print(LocalDateTime.now() + " " + str);
     }
 }

@@ -9,4 +9,9 @@ public class RendererErrImpl implements Renderer {
     public RendererErrImpl(PreProcessor preProcessor) {
         this.preProcessor = preProcessor;
     }
+
+    @Override
+    public void print(String str) {
+        System.err.print(preProcessor.preProcess(str));
+    }
 }

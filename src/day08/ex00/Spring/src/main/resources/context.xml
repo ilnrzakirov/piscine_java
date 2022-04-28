@@ -3,4 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="preProcessor" class="preProcessor.PreProcessorToUpperImpl">
+    </bean>
+    <bean id="printerWithPrefix" class="printer.PrinterWithPrefixImpl">
+        <constructor-arg name="renderer" ref="renderer"/>
+    </bean>
+    <bean id="renderer" class="renderer.RendererErrImpl">
+        <constructor-arg name="preProcessor" ref="preProcessor"/>
+    </bean>
 </beans>
