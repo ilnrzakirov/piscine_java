@@ -14,6 +14,5 @@ public class Main {
         PrinterWithPrefixImpl printer = new PrinterWithPrefixImpl(renderer);
         printer.setPrefix ("Prefix ");
         printer.print ("Hello!") ;
-
     }
 }
