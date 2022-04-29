@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import school21.spring.service.models.User;
 import school21.spring.service.repositories.UsersRepository;
 import school21.spring.service.repositories.UsersRepositoryJdbcImpl;
+import school21.spring.service.repositories.UsersRepositoryJdbcTemplateImpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,9 +40,10 @@ public class Main {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         UsersRepository usersRepository = context.getBean("usersRepositoryJdbc", UsersRepository.class);
-        System.out.println(usersRepository.findAll () );
+        System.out.println(usersRepository.findAll());
         usersRepository = context.getBean("usersRepositoryJdbcTemplate", UsersRepository.class);
-        System.out.println(usersRepository.findAll () );
+        System.out.println(usersRepository.findAll());
+        System.out.println();
 
         UsersRepositoryJdbcImpl usersRepositoryJdbc = new UsersRepositoryJdbcImpl(dataSource);
         User user = (User) usersRepositoryJdbc.findById(1L);
