@@ -1,7 +1,10 @@
 package school21.spring.service.application;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import school21.spring.service.models.User;
+import school21.spring.service.repositories.UsersRepository;
 import school21.spring.service.repositories.UsersRepositoryJdbcImpl;
 
 import java.io.IOException;
@@ -33,6 +36,13 @@ public class Main {
             throwables.printStackTrace();
         }
         getData(connection);
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+        UsersRepository usersRepository = context.getBean("usersRepositoryJdbc", UsersRepository.class);
+        System.out.println(usersRepository.findAll () );
+        usersRepository = context.getBean("usersRepositoryJdbcTemplate", UsersRepository.class);
+        System.out.println(usersRepository.findAll () );
+
         UsersRepositoryJdbcImpl usersRepositoryJdbc = new UsersRepositoryJdbcImpl(dataSource);
         User user = (User) usersRepositoryJdbc.findById(1L);
         System.out.println(user);
@@ -46,6 +56,15 @@ public class Main {
         User user2 = new User();
         user2.setEmail("sdfsdf");
         usersRepositoryJdbc.save(user2);
+        User newUser = new User();
+        newUser.setEmail("email");
+        newUser.setId(1L);
+        usersRepositoryJdbc.update(newUser);
+        usersRepositoryJdbc.delete(2L);
+        User findUser;
+        System.out.println();
+        findUser = usersRepositoryJdbc.findByEmail("email").get();
+        System.out.println(findUser);
     }
 
     private static void getData(Connection connection) {

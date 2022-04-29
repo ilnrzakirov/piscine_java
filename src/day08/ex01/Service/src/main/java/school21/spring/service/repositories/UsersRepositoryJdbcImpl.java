@@ -83,16 +83,49 @@ public class UsersRepositoryJdbcImpl implements  UsersRepository {
 
     @Override
     public void update(User entity) {
-
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("UPDATE users SET email='" + entity.getEmail() + "' WHERE id=" + entity.getId() + ";");
+            statement.execute(stringBuilder.toString());
+        } catch (SQLException throwables) {
+            System.err.println("Fail");
+        }
     }
 
     @Override
     public void delete(Long id) {
-
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("DELETE FROM users WHERE id=" + id + ";");
+            statement.execute(stringBuilder.toString());
+        } catch (SQLException throwables) {
+            System.err.println("Fail");
+        }
     }
 
     @Override
-    public Optional findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
+        User user = new User();
+        try {
+            Connection connection = dataSource.getConnection();
+            Statement statement = connection.createStatement();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("SELECT * FROM users WHERE email='" + email + "';");
+            ResultSet userSet;
+            userSet = statement.executeQuery(stringBuilder.toString());
+            userSet.next();
+            user.setId(userSet.getLong("id"));
+            user.setEmail(userSet.getString("email"));
+            return Optional.of(user);
+
+        } catch (SQLException throwables) {
+            System.err.println("User not found");
+        }
+
         return Optional.empty();
     }
 }
