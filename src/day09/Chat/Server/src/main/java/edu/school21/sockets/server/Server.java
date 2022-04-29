@@ -1,8 +1,12 @@
 package edu.school21.sockets.server;
 
+import edu.school21.sockets.config.SocketsApplicationConfig;
 import edu.school21.sockets.models.User;
 import edu.school21.sockets.repositories.UsersRepositoryImpl;
+import edu.school21.sockets.services.UsersService;
 import edu.school21.sockets.services.UsersServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.sql.DataSource;
 import java.io.*;
@@ -27,10 +31,25 @@ public class Server {
         this.dataSource = dataSource;
     }
 
+    public Server(Integer port) {
+        this.port = port;
+    }
+
+    private void createTable(){
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        getData(connection);
+    }
+
+
     public void run(){
         try {
-            User user = new User();
-            UsersServiceImpl usersService = new UsersServiceImpl();
+            ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SocketsApplicationConfig.class);
             serverSocket = new ServerSocket(this.port);
             Socket socket = serverSocket.accept();
             OutputStream outputStream = socket.getOutputStream();
@@ -53,11 +72,17 @@ public class Server {
             String username = bufferedReaderIN.readLine();
             out.println("Enter password: ");
             String password = bufferedReaderIN.readLine();
+            UsersService usersService = applicationContext.getBean(UsersService.class);
+
+            if (usersService.saveUser(username, password)){
+                out.println("user exists");
+                serverSocket.close();
+                outputStream.close();
+                inputStream.close();
+                System.exit(-1);
+            }
+
             out.println("Successful!");
-            user.setUsername(username);
-            user.setPassword(usersService.hashPassword(password));
-            UsersRepositoryImpl usersRepository = new UsersRepositoryImpl(dataSource);
-            usersRepository.save(user);
             serverSocket.close();
             outputStream.close();
             inputStream.close();

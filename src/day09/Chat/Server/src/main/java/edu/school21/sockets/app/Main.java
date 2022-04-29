@@ -1,9 +1,11 @@
 package edu.school21.sockets.app;
 
 import com.zaxxer.hikari.HikariDataSource;
+import edu.school21.sockets.config.SocketsApplicationConfig;
 import edu.school21.sockets.repositories.UsersRepository;
 import edu.school21.sockets.server.Server;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Connection;
@@ -30,21 +32,14 @@ public class Main {
             System.exit(-1);
         }
 
-        HikariDataSource dataSource = new HikariDataSource();
-        Connection connection = null;
-        dataSource.setJdbcUrl(DB_URL);
-        dataSource.setUsername(USER);
-        dataSource.setPassword(PASS);
+//        HikariDataSource dataSource = new HikariDataSource();
+//        Connection connection = null;
+//        dataSource.setJdbcUrl(DB_URL);
+//        dataSource.setUsername(USER);
+//        dataSource.setPassword(PASS);
 
-        Server server = new Server(port, dataSource);
+        Server server = new Server(port);
 
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        server.getData(connection);
         server.run();
 
     }

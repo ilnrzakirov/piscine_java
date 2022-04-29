@@ -9,13 +9,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.io.IOException;
-import java.sql.SQLException;
 
 @Configuration
 @ComponentScan("edu.school21.sockets")
 @PropertySource("classpath:db.properties")
 public class SocketsApplicationConfig {
+
     @Value("${db.url}")
     private String url;
     @Value("${db.user}")
@@ -26,7 +25,7 @@ public class SocketsApplicationConfig {
     private String driverName;
 
     @Bean
-    public HikariDataSource dataSource() throws SQLException, IOException {
+    public HikariDataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(url);
         dataSource.setUsername(user);
@@ -41,8 +40,8 @@ public class SocketsApplicationConfig {
     }
 
     @Bean
-    public UsersRepositoryImpl usersRepository() throws SQLException, IOException {
-        return new UsersRepositoryImpl();
+    public UsersRepositoryImpl usersRepository() {
+        return new UsersRepositoryImpl(dataSource());
     }
 
 }

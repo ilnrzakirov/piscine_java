@@ -52,6 +52,15 @@ public class Main {
             String password = scanner.nextLine();
             printWriter.println(password);
             answer = bufferedReader.readLine();
+
+            if (answer.equals("user exists")){
+                socket.close();
+                inputStream.close();
+                outputStream.close();
+                System.err.println("user exists");
+                System.exit(-1);
+            }
+
             System.out.println(answer);
 
         } catch (IOException e) {
