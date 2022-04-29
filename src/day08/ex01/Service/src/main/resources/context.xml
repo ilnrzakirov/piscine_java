@@ -26,4 +26,14 @@
         <constructor-arg ref="hikariConfig"/>
     </bean>
 
+    <bean id="dataSource1"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver.name}" />
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.user}" />
+        <property name="password" value="${db.password}" />
+    </bean>
+
+
+
 </beans>
