@@ -19,7 +19,7 @@ public class Program {
 
     private static final String DB_URL = "jdbc:postgresql://localhost/";
     private static final String USER = "postgres";
-    private static final String PASS = "";
+    private static final String PASS = "postgres";
     private static final String PATH_SC = "src/main/resources/schema.sql";
     private static final String PATH_DB = "src/main/resources/data.sql";
     private static final String PR = "enter the id";
