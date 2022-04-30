@@ -22,20 +22,23 @@ public class Main {
     private static final String DB_URL = "jdbc:postgresql://localhost/";
     private static final String USER = "postgres";
     private static final String PASS = "postgres";
+    public static final String BAD_ARGUMENT = "Bad argument";
+    public static final String PORT = "--port=";
+    public static final String THE_ARGUMENT_IS_NOT_A_NUMBER = "the argument is not a number";
     public static LinkedList<MultiThreadServer> serverList = new LinkedList<>();
 
     public static void main(String[] args) {
-        if (args.length != 1 || args[0].isEmpty() || !args[0].startsWith("--port=")) {
-            System.err.println("Bad argument");
+        if (args.length != 1 || args[0].isEmpty() || !args[0].startsWith(PORT)) {
+            System.err.println(BAD_ARGUMENT);
             System.exit(-1);
         }
 
-        String remString = args[0].replaceFirst("--port=", "");
+        String remString = args[0].replaceFirst(PORT, "");
         Integer port = null;
         try {
             port = Integer.parseInt(remString);
         } catch (NumberFormatException error){
-            System.err.println("the argument is not a number");
+            System.err.println(THE_ARGUMENT_IS_NOT_A_NUMBER);
             System.exit(-1);
         }
 

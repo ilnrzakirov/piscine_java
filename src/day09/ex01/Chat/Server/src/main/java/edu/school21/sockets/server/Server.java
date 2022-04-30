@@ -18,6 +18,17 @@ import java.sql.Statement;
 import java.util.List;
 
 public class Server {
+    public static final String HELLO_FROM_SERVER = "Hello from Server!";
+    public static final String COMMAND_NOT_FOUND = "Command not found";
+    public static final String SIGN_UP = "signUp";
+    public static final String SIGN_IN = "signIn";
+    public static final String COMMAND_NOT_FOUND1 = "Command not found";
+    public static final String ENTER_USERNAME = "Enter username: ";
+    public static final String ENTER_PASSWORD = "Enter password: ";
+    public static final String USER_EXISTS = "user exists";
+    public static final String ENTER_USERNAME1 = "Enter username: ";
+    public static final String ENTER_PASSWORD1 = "Enter password: ";
+    public static final String EMPTY_FILE = "Empty file";
     private ServerSocket serverSocket;
     private final Integer port;
     private DataSource dataSource;
@@ -56,12 +67,12 @@ public class Server {
                 InputStream inputStream = socket.getInputStream();
                 PrintWriter out = new PrintWriter(outputStream, true);
                 BufferedReader bufferedReaderIN = new BufferedReader(new InputStreamReader(inputStream));
-                out.println("Hello from Server!");
+                out.println(HELLO_FROM_SERVER);
                 String message = bufferedReaderIN.readLine();
 
-                if (message == null || !message.equals("signUp") && !message.equals("signIn")) {
-                    System.err.println("Command not found");
-                    out.println("Command not found");
+                if (message == null || !message.equals(SIGN_UP) && !message.equals(SIGN_IN)) {
+                    System.err.println(COMMAND_NOT_FOUND);
+                    out.println(COMMAND_NOT_FOUND1);
                     outputStream.close();
                     inputStream.close();
                     serverSocket.close();
@@ -70,15 +81,15 @@ public class Server {
                 }
 
                 if (message.equals("signUp")) {
-                    out.println("Enter username: ");
+                    out.println(ENTER_USERNAME);
                     String username = bufferedReaderIN.readLine();
-                    out.println("Enter password: ");
+                    out.println(ENTER_PASSWORD);
                     String password = bufferedReaderIN.readLine();
                     UsersService usersService = applicationContext.getBean(UsersService.class);
                     MessageService messageService = applicationContext.getBean(MessageService.class);
 
                     if (usersService.saveUser(username, password)) {
-                        out.println("user exists");
+                        out.println(USER_EXISTS);
                         outputStream.close();
                         inputStream.close();
                         serverSocket.close();
@@ -95,9 +106,9 @@ public class Server {
                 }
 
                 if (message.equals("signIn")) {
-                    out.println("Enter username: ");
+                    out.println(ENTER_USERNAME1);
                     String login = bufferedReaderIN.readLine();
-                    out.println("Enter password: ");
+                    out.println(ENTER_PASSWORD1);
                     String password = bufferedReaderIN.readLine();
                     UsersService usersService = applicationContext.getBean(UsersService.class);
                 }
@@ -129,7 +140,7 @@ public class Server {
         }
 
         if (allLineData  == null || allLineSchema == null){
-            System.err.println("Empty file");
+            System.err.println(EMPTY_FILE);
             System.exit(-1);
         }
 
