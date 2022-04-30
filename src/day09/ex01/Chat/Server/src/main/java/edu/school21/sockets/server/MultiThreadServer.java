@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class MultiThreadServer extends Thread {
@@ -71,6 +72,26 @@ public class MultiThreadServer extends Thread {
                     out.println("Enter password: ");
                     String password = bufferedReaderIN.readLine();
                     UsersService usersService = applicationContext.getBean(UsersService.class);
+
+                    if (usersService.checkUser(login, password)){
+                        if (usersService.singIn(login, password)){
+                            String msg = bufferedReaderIN.readLine();
+                            while (!msg.equals("Exit")){
+
+                            }
+                            out.println("You have left the chat.");
+                            outputStream.close();
+                            inputStream.close();
+                            serverSocket.close();
+                            break;
+                        } else {
+                            out.println("incorrect password");
+                            outputStream.close();
+                            inputStream.close();
+                            serverSocket.close();
+                            break;
+                        }
+                    }
                 }
             }
 
