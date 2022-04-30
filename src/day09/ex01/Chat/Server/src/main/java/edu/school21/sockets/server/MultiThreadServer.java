@@ -11,10 +11,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MultiThreadServer extends Thread {
 
     private  Socket serverSocket;
+    private static ReentrantLock lock = new ReentrantLock();
 
     public MultiThreadServer(Socket socket) {
         this.serverSocket = socket;
@@ -68,20 +70,25 @@ public class MultiThreadServer extends Thread {
 
                     if (usersService.checkUser(login, password)){
                         if (usersService.singIn(login, password)){
+                            lock.lock();
                             Main.serverList.add(this);
+                            lock.unlock();
                             out.println("Start messaging");
 
                             while (true){
                                 String msg = bufferedReaderIN.readLine();
+
                                 if (msg.equals("Exit")){
                                     Main.serverList.remove(this);
                                     out.println("You have left the chat.");
                                     shutdown(inputStream, outputStream, serverSocket);
                                     break;
                                 }
+                                lock.lock();
                                 for (MultiThreadServer multiThreadServer : Main.serverList) {
                                     multiThreadServer.sendMsg(msg, out);
                                 }
+                                lock.unlock();
                             }
                         } else {
                             out.println("incorrect password");
