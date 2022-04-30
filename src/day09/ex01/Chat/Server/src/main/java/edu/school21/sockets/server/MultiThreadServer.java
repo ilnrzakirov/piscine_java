@@ -1,5 +1,6 @@
 package edu.school21.sockets.server;
 
+import edu.school21.sockets.app.Main;
 import edu.school21.sockets.config.SocketsApplicationConfig;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.context.ApplicationContext;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class MultiThreadServer extends Thread {
 
@@ -63,6 +65,7 @@ public class MultiThreadServer extends Thread {
                 }
 
                 if (message.equals("signIn")) {
+                    Main.serverList.add(this);
                     out.println("Enter username: ");
                     String login = bufferedReaderIN.readLine();
                     out.println("Enter password: ");
