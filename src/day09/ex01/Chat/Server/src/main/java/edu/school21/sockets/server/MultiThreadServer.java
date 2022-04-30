@@ -17,6 +17,7 @@ public class MultiThreadServer extends Thread {
 
     private  Socket serverSocket;
     private static ReentrantLock lock = new ReentrantLock();
+    private PrintWriter out;
 
     public MultiThreadServer(Socket socket) {
         this.serverSocket = socket;
@@ -31,7 +32,7 @@ public class MultiThreadServer extends Thread {
                 ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SocketsApplicationConfig.class);
                 OutputStream outputStream = serverSocket.getOutputStream();
                 InputStream inputStream = serverSocket.getInputStream();
-                PrintWriter out = new PrintWriter(outputStream, true);
+                out = new PrintWriter(outputStream, true);
                 BufferedReader bufferedReaderIN = new BufferedReader(new InputStreamReader(inputStream));
                 out.println("Hello from Server!");
                 String message = bufferedReaderIN.readLine();
@@ -84,11 +85,9 @@ public class MultiThreadServer extends Thread {
                                     shutdown(inputStream, outputStream, serverSocket);
                                     break;
                                 }
-                                lock.lock();
                                 for (MultiThreadServer multiThreadServer : Main.serverList) {
-                                    multiThreadServer.sendMsg(msg, out);
+                                    multiThreadServer.sendMsg(msg);
                                 }
-                                lock.unlock();
                             }
                         } else {
                             out.println("incorrect password");
@@ -118,8 +117,8 @@ public class MultiThreadServer extends Thread {
         }
     }
 
-    private void sendMsg(String msg, PrintWriter printWriter){
-        printWriter.println(msg);
+    private void sendMsg(String msg){
+        out.println(msg);
     }
 
 }
