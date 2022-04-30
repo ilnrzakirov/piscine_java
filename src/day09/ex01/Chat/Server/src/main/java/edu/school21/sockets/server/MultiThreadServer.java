@@ -37,9 +37,7 @@ public class MultiThreadServer extends Thread {
                 if (message == null || !message.equals("signUp") && !message.equals("signIn")) {
                     System.err.println("Command not found");
                     out.println("Command not found");
-                    outputStream.close();
-                    inputStream.close();
-                    serverSocket.close();
+                    shutdown(inputStream, outputStream, serverSocket);;
                     break;
                 }
 
@@ -52,16 +50,12 @@ public class MultiThreadServer extends Thread {
 
                     if (usersService.saveUser(username, password)) {
                         out.println("user exists");
-                        outputStream.close();
-                        inputStream.close();
-                        serverSocket.close();
+                        shutdown(inputStream, outputStream, serverSocket);
                         break;
                     }
 
                     out.println("Successful!");
-                    outputStream.close();
-                    inputStream.close();
-                    serverSocket.close();
+                    shutdown(inputStream, outputStream, serverSocket);
                     break;
                 }
 
@@ -76,33 +70,29 @@ public class MultiThreadServer extends Thread {
                         if (usersService.singIn(login, password)){
                             Main.serverList.add(this);
                             out.println("Start messaging");
-                            String msg = bufferedReaderIN.readLine();
 
-                            while (!msg.equals("Exit")){
+                            while (true){
+                                String msg = bufferedReaderIN.readLine();
+                                if (msg.equals("Exit")){
+                                    Main.serverList.remove(this);
+                                    out.println("You have left the chat.");
+                                    shutdown(inputStream, outputStream, serverSocket);
+                                    break;
+                                }
                                 for (MultiThreadServer multiThreadServer : Main.serverList) {
-                                    multiThreadServer
+                                    multiThreadServer.sendMsg(msg, out);
                                 }
                             }
-
-                            Main.serverList.remove(this);
-                            out.println("You have left the chat.");
-                            outputStream.close();
-                            inputStream.close();
-                            serverSocket.close();
-                            break;
                         } else {
                             out.println("incorrect password");
-                            outputStream.close();
-                            inputStream.close();
-                            serverSocket.close();
+                            shutdown(inputStream, outputStream, serverSocket);
                             break;
                         }
+                    } else {
+                        out.println("incorrect login");
+                        shutdown(inputStream, outputStream, serverSocket);
+                        break;
                     }
-                    out.println("incorrect login");
-                    outputStream.close();
-                    inputStream.close();
-                    serverSocket.close();
-                    break;
                 }
             }
 
@@ -111,8 +101,18 @@ public class MultiThreadServer extends Thread {
         }
     }
 
-    public sendMsg(String msg){
+    private void shutdown(InputStream inputStream, OutputStream outputStream, Socket serverSocket) {
+        try {
+            outputStream.close();
+            inputStream.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void sendMsg(String msg, PrintWriter printWriter){
+        printWriter.println(msg);
     }
 
 }
