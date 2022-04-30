@@ -1,5 +1,6 @@
 package edu.school21.sockets.config;
 
+import edu.school21.sockets.repositories.MessageRepositoryImpl;
 import edu.school21.sockets.repositories.UsersRepositoryImpl;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,4 +45,8 @@ public class SocketsApplicationConfig {
         return new UsersRepositoryImpl(dataSource());
     }
 
+    @Bean
+    public MessageRepositoryImpl messageRepositoryImpl() {
+        return new MessageRepositoryImpl(dataSource());
+    }
 }

@@ -1,6 +1,7 @@
 package edu.school21.sockets.server;
 
 import edu.school21.sockets.config.SocketsApplicationConfig;
+import edu.school21.sockets.services.MessageService;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -74,6 +75,7 @@ public class Server {
                     out.println("Enter password: ");
                     String password = bufferedReaderIN.readLine();
                     UsersService usersService = applicationContext.getBean(UsersService.class);
+                    MessageService messageService = applicationContext.getBean(MessageService.class);
 
                     if (usersService.saveUser(username, password)) {
                         out.println("user exists");

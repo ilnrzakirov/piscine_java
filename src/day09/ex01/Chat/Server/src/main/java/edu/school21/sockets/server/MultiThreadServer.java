@@ -2,6 +2,7 @@ package edu.school21.sockets.server;
 
 import edu.school21.sockets.app.Main;
 import edu.school21.sockets.config.SocketsApplicationConfig;
+import edu.school21.sockets.services.MessageService;
 import edu.school21.sockets.services.UsersService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -68,6 +69,7 @@ public class MultiThreadServer extends Thread {
                     out.println("Enter password: ");
                     String password = bufferedReaderIN.readLine();
                     UsersService usersService = applicationContext.getBean(UsersService.class);
+                    MessageService messageService = applicationContext.getBean(MessageService.class);
 
                     if (usersService.checkUser(login, password)){
                         if (usersService.singIn(login, password)){
@@ -85,6 +87,7 @@ public class MultiThreadServer extends Thread {
                                     shutdown(inputStream, outputStream, serverSocket);
                                     break;
                                 }
+                                messageService.saveMessage(msg);
                                 for (MultiThreadServer multiThreadServer : Main.serverList) {
                                     multiThreadServer.sendMsg(msg);
                                 }

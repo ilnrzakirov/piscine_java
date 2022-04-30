@@ -86,6 +86,10 @@ public class Main {
                         while (true) {
                             try {
                                 String str = bufferedReader.readLine();
+                                if (str == null){
+                                    shutdown(inputStream, outputStream, socket, scanner);
+                                    System.exit(-1);
+                                }
                                 System.out.println(str);
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -93,6 +97,7 @@ public class Main {
                         }
                     }
                 });
+                thread.start();
 
                 while (true){
                     String msg = scanner.nextLine();
