@@ -66,7 +66,6 @@ public class MultiThreadServer extends Thread {
                 }
 
                 if (message.equals("signIn")) {
-                    Main.serverList.add(this);
                     out.println("Enter username: ");
                     String login = bufferedReaderIN.readLine();
                     out.println("Enter password: ");
@@ -75,10 +74,17 @@ public class MultiThreadServer extends Thread {
 
                     if (usersService.checkUser(login, password)){
                         if (usersService.singIn(login, password)){
+                            Main.serverList.add(this);
+                            out.println("Start messaging");
                             String msg = bufferedReaderIN.readLine();
-                            while (!msg.equals("Exit")){
 
+                            while (!msg.equals("Exit")){
+                                for (MultiThreadServer multiThreadServer : Main.serverList) {
+                                    multiThreadServer
+                                }
                             }
+
+                            Main.serverList.remove(this);
                             out.println("You have left the chat.");
                             outputStream.close();
                             inputStream.close();
@@ -92,6 +98,11 @@ public class MultiThreadServer extends Thread {
                             break;
                         }
                     }
+                    out.println("incorrect login");
+                    outputStream.close();
+                    inputStream.close();
+                    serverSocket.close();
+                    break;
                 }
             }
 
@@ -99,4 +110,9 @@ public class MultiThreadServer extends Thread {
             e.printStackTrace();
         }
     }
+
+    public sendMsg(String msg){
+
+    }
+
 }
